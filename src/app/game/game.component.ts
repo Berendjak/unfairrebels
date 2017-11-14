@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'app-level',
-  templateUrl: './level.component.html',
-  styleUrls: ['./level.component.sass'],
+  selector: 'app-game',
+  templateUrl: './game.component.html',
+  styleUrls: ['./game.component.sass'],
   encapsulation: ViewEncapsulation.None
 })
-export class LevelComponent implements OnInit {
+export class GameComponent implements OnInit {
   constructor() { }
 
   // Variables
@@ -16,4 +16,5 @@ export class LevelComponent implements OnInit {
   }
 
   // Functions
+
 }
