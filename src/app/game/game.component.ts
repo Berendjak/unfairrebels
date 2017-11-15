@@ -1,4 +1,6 @@
-import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+
+import {AppComponent} from '../app.component';
 
 class Ball {
   constructor(private ctx) {
@@ -27,16 +29,12 @@ class Ball {
 })
 
 export class GameComponent implements OnInit {
-  constructor() {
-  }
-
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+  constructor(private canvas: AppComponent) {}
 
   private ctx;
 
   ngOnInit() {
-
-    this.ctx = this.canvasRef.nativeElement.getContext('2d');
+    this.ctx = this.canvas.canvasRef.nativeElement.getContext('2d');
 
     const ball = new Ball(this.ctx);
     ball.draw();
