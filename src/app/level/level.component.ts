@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {AppComponent} from '../app.component';
 
 @Component({
   selector: 'app-level',
@@ -7,12 +8,12 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class LevelComponent implements OnInit {
-  constructor() { }
+  constructor(private canvas: AppComponent) { }
 
-  // Variables
+  private ctx;
 
   ngOnInit() {
-    // In here goes what needs to happen at the same time the page loads
+    this.ctx = this.canvas.canvasRef.nativeElement.getContext('2d');
   }
 
   // Functions

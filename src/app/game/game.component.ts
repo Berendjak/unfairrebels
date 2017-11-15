@@ -3,8 +3,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AppComponent} from '../app.component';
 
 class Ball {
-  constructor(private ctx) {
-  }
+  constructor(private ctx) {}
 
   public x = 325;
   public y = 350;
