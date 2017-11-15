@@ -15,9 +15,12 @@ const Routes: Routes = [
     path: '',
     component: HomeComponent
   },
-
   {
-    path: 'game',
+    path: 'level',
+    component: LevelComponent
+  },
+  {
+    path: 'game/:id',
     component: GameComponent
   }
 ];
