@@ -14,6 +14,11 @@ const Routes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+
+  {
+    path: 'game',
+    component: GameComponent
   }
 ];
 
