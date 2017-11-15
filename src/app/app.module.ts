@@ -20,7 +20,7 @@ const Routes: Routes = [
     component: LevelComponent
   },
   {
-    path: 'game/:id',
+    path: 'game',
     component: GameComponent
   }
 ];
