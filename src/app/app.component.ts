@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
-class Character {
+export class Character {
   public width;
   public height;
   public speedX;
@@ -18,6 +18,7 @@ class Character {
     this.x = x;
     this.y = y;
   }
+
   public update() {
     this.newPos();
     this.ctx.fillStyle = this.color;
@@ -29,22 +30,26 @@ class Character {
   }
 
   public moveup() {
-    this.speedY -= 1;
+    this.speedY = -1;
   }
 
   public movedown() {
-    this.speedY += 1;
+    this.speedY = 1;
   }
 
   public moveleft() {
-    this.speedX -= 1;
+    this.speedX = -1;
   }
 
   public moveright() {
-    this.speedX += 1;
+    this.speedX = 1;
   }
 
-}
+  public stopbitch() {
+    this.speedY = 0;
+    this.speedX = 0;
+  }
+  }
 
 @Component({
   selector: 'app-root',
@@ -69,8 +74,6 @@ export class AppComponent implements AfterViewInit{
     this.canvas.width = 480;
     this.canvas.height = 270;
     this.ctx = this.canvas.getContext('2d');
-
-    this.startGame();
   }
 
   public updateGameArea() {
@@ -78,10 +81,8 @@ export class AppComponent implements AfterViewInit{
     this.character.update();
   }
 
-  public startGame() {
-    this.character = new Character(this.ctx, 30, 30, 'red', 10, 120);
+  public startGame(character) {
+    this.character = character;
     this.interval = setInterval(() => this.updateGameArea(), 20);
   }
-
-
 }

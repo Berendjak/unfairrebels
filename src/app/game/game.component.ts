@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, HostListener, ViewEncapsulation} from '@angular/core';
 
-import {AppComponent} from '../app.component';
+import {AppComponent, Character} from '../app.component';
 
 @Component({
   selector: 'app-game',
@@ -9,11 +9,37 @@ import {AppComponent} from '../app.component';
   encapsulation: ViewEncapsulation.None
 })
 
-export class GameComponent implements OnInit {
-  constructor(private canvas: AppComponent) {}
+export class GameComponent implements AfterViewInit {
+  constructor( private canvas: AppComponent) {}
 
-  ngOnInit() {
-    // this.canvas.startGame();
+  public character: Character;
+
+  ngAfterViewInit() {
+    this.character = new Character(this.canvas.ctx, 30, 30, 'red', 10, 120);
+    this.canvas.startGame(this.character);
   }
-  // Functions
+
+  @HostListener('document:keydown', ['$event'])
+  public Controls(event: KeyboardEvent) {
+    console.log(event.keyCode);
+
+    if (event.keyCode === 38){
+      this.character.moveup();
+    }
+    if (event.keyCode === 39){
+      this.character.moveright();
+    }
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  public ControlsStop(event: KeyboardEvent) {
+    console.log(event.keyCode);
+
+    if (event.keyCode === 38){
+
+    }
+    if (event.keyCode === 39){
+      this.character.moveright();
+    }
+  }
 }
