@@ -13,7 +13,7 @@ export class LevelComponent implements OnInit {
   private ctx;
 
   ngOnInit() {
-    this.ctx = this.canvas.canvasRef.nativeElement.getContext('2d');
+    // this.ctx = this.canvas.canvasRef.nativeElement.getContext('2d');
   }
 
   // Functions
