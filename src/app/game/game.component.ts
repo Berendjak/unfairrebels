@@ -10,12 +10,13 @@ import {AppComponent, Character} from '../app.component';
 })
 
 export class GameComponent implements AfterViewInit {
-  constructor( private canvas: AppComponent) {}
+  constructor(private canvas: AppComponent) {
+  }
 
   public character: Character;
 
   ngAfterViewInit() {
-    this.character = new Character(this.canvas.ctx, 30, 30, 'red', 10, 120);
+    this.character = new Character(this.canvas.ctx, 30, 30, 'red', 10, 230);
     this.canvas.startGame(this.character);
   }
 
@@ -23,11 +24,14 @@ export class GameComponent implements AfterViewInit {
   public Controls(event: KeyboardEvent) {
     console.log(event.keyCode);
 
-    if (event.keyCode === 38){
+    if (event.keyCode === 38) {
       this.character.moveup();
     }
-    if (event.keyCode === 39){
+    if (event.keyCode === 39) {
       this.character.moveright();
+    }
+    if (event.keyCode === 37) {
+      this.character.moveleft();
     }
   }
 
@@ -35,11 +39,11 @@ export class GameComponent implements AfterViewInit {
   public ControlsStop(event: KeyboardEvent) {
     console.log(event.keyCode);
 
-    if (event.keyCode === 38){
-
+    if (event.keyCode === 39) {
+      this.character.stop();
     }
-    if (event.keyCode === 39){
-      this.character.moveright();
+    if (event.keyCode === 37) {
+      this.character.stop();
     }
   }
 }
