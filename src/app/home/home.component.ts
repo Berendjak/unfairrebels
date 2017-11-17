@@ -1,6 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {textDef} from "@angular/core/src/view";
-import {createText} from "@angular/core/src/view/text";
 
 @Component({
   selector: 'app-home',
@@ -21,13 +19,13 @@ export class HomeComponent implements OnInit {
     // In here goes what needs to happen at the same time the page loads
     this.audio.src = '../assets/sounds/theme.mp3';
     this.audio.load();
-    this.audio.play()
+    this.audio.play();
   }
 
-  // Deze is geluid bij het laden van de pagina
+  // Function for toggling the sound
   public sound() {
       this.toggle = !this.toggle;
-      this.buttonStatus = this.toggle ? 'MUTE' : 'SOUND'
+      this.buttonStatus = this.toggle ? 'MUTE' : 'SOUND';
 
       if (this.toggle) {
         this.audio.src = '../assets/sounds/theme.mp3';

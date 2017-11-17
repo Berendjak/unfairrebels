@@ -43,9 +43,6 @@ export class Character {
     this.x += this.speedleftX;
     this.x += this.speedrightX;
     this.y += this.speedY + this.gravitySpeed;
-    console.log(this.y);
-
-
   }
 
   public moveup() {
