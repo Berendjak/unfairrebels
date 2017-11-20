@@ -1,86 +1,28 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-
-export class Character {
-  public width;
-  public height;
-  public speedleftX;
-  public speedrightX;
-  public speedY;
-  public x;
-  public y;
-  public color;
-  public gravity;
-  public gravitySpeed;
-
-  constructor(public ctx, width, height, color, x, y) {
-    this.width = width;
-    this.height = height;
-    this.speedleftX = 0;
-    this.speedrightX = 0;
-    this.speedY = 0;
-
-    this.color = color;
-    this.x = x;
-    this.y = y;
-    this.gravity = 0.1;
-    this.gravitySpeed = 0;
-  }
-
-  public update() {
-    this.newPos();
-    this.ctx.fillStyle = this.color;
-    this.ctx.fillRect(this.x, this.y, this.width, this.height);
-  }
-
-  public newPos() {
-    if (this.y >= 230 && this.gravitySpeed >= 0) {
-      // this.gravity = 0;
-      this.gravitySpeed = 0;
-    } else if (this.gravitySpeed < 3) {
-      this.gravitySpeed += this.gravity;
-    }
-
-    this.x += this.speedleftX;
-    this.x += this.speedrightX;
-    this.y += this.speedY + this.gravitySpeed;
-  }
-
-  public moveup() {
-    this.gravitySpeed = -3;
-    // this.speedY = - 3;
-  }
-
-  public movedown() {
-    this.speedY = 1;
-  }
-
-  public moveleft() {
-    this.speedleftX = -1;
-  }
-
-  public moveright() {
-    this.speedrightX = +1;
-  }
-
-  public stop() {
-    this.speedleftX = 0;
-    this.speedrightX = 0;
-  }
-}
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Character } from './helpers/canvas.character';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, OnInit {
+  // Canvas
   public ctx;
-  private character: Character;
-
   @ViewChild('myCanvas')
   public canvasRef: ElementRef;
   public canvas;
+
+  // Update interval
   private interval;
+
+  // Character
+  private character: Character;
+
+  // Sound
+  public audio = new Audio();
+  public buttonStatus = 'MUTE';
+  public toggle = true;
 
   public clear = () => {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -88,9 +30,28 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.canvas = this.canvasRef.nativeElement;
-    this.canvas.width = 480;
-    this.canvas.height = 270;
+    this.canvas.width = 1000;
+    this.canvas.height = 650;
     this.ctx = this.canvas.getContext('2d');
+  }
+  ngOnInit() {
+    this.audio.src = '../assets/sounds/theme.mp3';
+    this.audio.load();
+    this.audio.play();
+  }
+
+  // Function for toggling the sound
+  public Sound() {
+    this.toggle = !this.toggle;
+    this.buttonStatus = this.toggle ? 'MUTE' : 'SOUND';
+
+    if (this.toggle) {
+      this.audio.src = '../assets/sounds/theme.mp3';
+      this.audio.load();
+      this.audio.play();
+    } else {
+      this.audio.src = '';
+    }
   }
 
   public updateGameArea() {
@@ -98,9 +59,32 @@ export class AppComponent implements AfterViewInit {
     this.character.update();
   }
 
-  public startGame(character) {
-    this.character = character;
+  public startGame() {
+    this.character = new Character(this.ctx, 30, 30, this.canvas.width / 2 - 30, 600, 'red');
     this.interval = setInterval(() => this.updateGameArea(), 20);
+  }
 
+  @HostListener('document:keydown', ['$event'])
+  public Controls(event: KeyboardEvent) {
+    if (!event.altKey) {
+      if (event.keyCode === 38) {
+        this.character.moveup();
+      }
+      if (event.keyCode === 39) {
+        this.character.moveright();
+      }
+      if (event.keyCode === 37) {
+        this.character.moveleft();
+      }
+    }
+  }
+  @HostListener('document:keyup', ['$event'])
+  public ControlsStop(event: KeyboardEvent) {
+    if (event.keyCode === 39) {
+      this.character.stop();
+    }
+    if (event.keyCode === 37) {
+      this.character.stop();
+    }
   }
 }

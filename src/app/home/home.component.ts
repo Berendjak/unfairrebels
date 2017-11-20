@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
+import { AppComponent } from '../app.component';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -7,32 +9,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit {
-  constructor() { }
+  constructor(private appComponent: AppComponent) { }
 
-  // Variables
-  public audio = new Audio();
-  public buttonStatus = 'MUTE';
+  ngOnInit() {
 
-  public toggle = true;
-
-    ngOnInit() {
-    // In here goes what needs to happen at the same time the page loads
-    this.audio.src = '../assets/sounds/theme.mp3';
-    this.audio.load();
-    this.audio.play();
-  }
-
-  // Function for toggling the sound
-  public sound() {
-      this.toggle = !this.toggle;
-      this.buttonStatus = this.toggle ? 'MUTE' : 'SOUND';
-
-      if (this.toggle) {
-        this.audio.src = '../assets/sounds/theme.mp3';
-        this.audio.load();
-        this.audio.play();
-      } else {
-        this.audio.src = '';
-      }
   }
 }

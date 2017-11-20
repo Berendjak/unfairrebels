@@ -1,7 +1,5 @@
-<p> Unfair Rebels </p>
-
 <!--Start knop die navigeerd naar level selectie scherm-->
 <button class="start" routerLink="level">START</button>
 
 <!--Dit is de muteknop-->
-<button (click)="sound()" class="music">{{buttonStatus}}</button>
+<button (click)="appComponent.Sound()" class="music">{{appComponent.buttonStatus}}</button>

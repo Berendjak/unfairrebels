@@ -8,17 +8,14 @@ import {AppComponent} from '../app.component';
   encapsulation: ViewEncapsulation.None
 })
 export class LevelComponent implements OnInit {
-  constructor(private canvas: AppComponent) {
-  }
+  constructor(private appComponent: AppComponent) {}
 
-  private ctx;
+  // Variables
 
-  ngOnInit() {
-    // this.ctx = this.canvas.canvasRef.nativeElement.getContext('2d');
-  }
-
+  ngOnInit() {}
 
   // Functions
+
 }
 
 
