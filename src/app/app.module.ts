@@ -8,7 +8,6 @@ import { HomeComponent } from './home/home.component';
 import { LevelComponent } from './level/level.component';
 import { GameComponent } from './game/game.component';
 
-
 // The Routes are going in here!
 const Routes: Routes = [
   {

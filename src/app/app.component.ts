@@ -12,6 +12,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   @ViewChild('myCanvas')
   public canvasRef: ElementRef;
   public canvas;
+  public afbeelding;
 
   // Update interval
   private interval;
@@ -24,6 +25,8 @@ export class AppComponent implements AfterViewInit, OnInit {
   public buttonStatus = 'MUTE';
   public toggle = true;
 
+
+
   public clear = () => {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
@@ -33,8 +36,11 @@ export class AppComponent implements AfterViewInit, OnInit {
     this.canvas.width = 1000;
     this.canvas.height = 650;
     this.ctx = this.canvas.getContext('2d');
+
   }
+
   ngOnInit() {
+    this.afbeelding = 'url("../assets/images/background.jpg")';
     this.audio.src = '../assets/sounds/theme.mp3';
     this.audio.load();
     this.audio.play();
