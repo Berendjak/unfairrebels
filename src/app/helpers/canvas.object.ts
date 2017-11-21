@@ -1,4 +1,4 @@
-export class CanvasObject {
+export abstract class CanvasObject {
   public ctx;
   public width;
   public height;
@@ -13,5 +13,9 @@ export class CanvasObject {
     this.y = y;
     this.width = width;
     this.height = height;
+  }
+  public draw() {
+    this.ctx.fillStyle = this.color;
+    this.ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 }

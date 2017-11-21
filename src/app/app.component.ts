@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Character } from './helpers/canvas.character';
+import { Maps } from './maps/maps';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,9 @@ export class AppComponent implements AfterViewInit, OnInit {
   @ViewChild('myCanvas')
   public canvasRef: ElementRef;
   public canvas;
+
+  // Map
+  public maps: Maps;
 
   // Update interval
   private interval;
@@ -57,10 +61,12 @@ export class AppComponent implements AfterViewInit, OnInit {
   public updateGameArea() {
     this.clear();
     this.character.update();
+    this.character.draw();
+    this.maps = new Maps(this.ctx);
   }
 
   public startGame() {
-    this.character = new Character(this.ctx, 30, 30, this.canvas.width / 2 - 30, 600, 'red');
+    this.character = new Character(this.ctx, 10, 30, this.canvas.width / 2 - 30, 600, 'red');
     this.interval = setInterval(() => this.updateGameArea(), 20);
   }
 

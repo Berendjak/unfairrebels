@@ -27,4 +27,13 @@ export class MovingObject extends CanvasObject{
     this.x += this.speedleftX + this.speedrightX;
     this.y += this.speedY + this.gravitySpeed;
   }
+
+  public update() {
+    this.newPos();
+  }
+
+  public stop() {
+    this.speedleftX = 0;
+    this.speedrightX = 0;
+  }
 }
