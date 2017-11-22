@@ -1,6 +1,6 @@
 import { CanvasObject } from './canvas.object';
 
-const gravity = 0.5;
+const gravity = 1;
 
 export class MovingObject extends CanvasObject{
   public speedleftX: number;
@@ -27,9 +27,15 @@ export class MovingObject extends CanvasObject{
     this.x += this.speedleftX + this.speedrightX;
     this.y += this.speedY + this.gravitySpeed;
   }
+  
+  public update() {
+    this.newPos();
+  }
 
-  public stop() {
-    this.speedleftX = 0;
+  public stopright() {
     this.speedrightX = 0;
+  }
+  public stopleft() {
+    this.speedleftX = 0;
   }
 }

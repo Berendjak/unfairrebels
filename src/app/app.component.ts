@@ -80,6 +80,11 @@ export class AppComponent implements AfterViewInit, OnInit {
     this.collider();
   }
 
+  public startGame() {
+    this.character = new Character(this.ctx, 10, 30, this.canvas.width / 2 - 30, 600, 'red');
+    this.interval = setInterval(() => this.updateGameArea(), 15);
+  }
+
   @HostListener('document:keydown', ['$event'])
   public Controls(event: KeyboardEvent) {
     if (!event.altKey) {
@@ -98,10 +103,10 @@ export class AppComponent implements AfterViewInit, OnInit {
   @HostListener('document:keyup', ['$event'])
   public ControlsStop(event: KeyboardEvent) {
     if (event.keyCode === 39) {
-      this.character.stop();
+      this.character.stopright();
     }
     if (event.keyCode === 37) {
-      this.character.stop();
+      this.character.stopleft();
     }
   }
 }
