@@ -3,9 +3,8 @@ import { MovingObject } from './canvas.moving.object';
 export class Character extends MovingObject{
   public moveup() {
     if (this.y >= 600) {
-      this.gravitySpeed = -15;
+      this.gravitySpeed = -20;
     }
-    // this.speedY = - 3;
   }
 
   public movedown() {
@@ -13,11 +12,11 @@ export class Character extends MovingObject{
   }
 
   public moveleft() {
-    this.speedleftX = -3;
+    this.speedleftX = -5;
   }
 
   public moveright() {
-    this.speedrightX = +3;
+    this.speedrightX = 5;
   }
 
 }
