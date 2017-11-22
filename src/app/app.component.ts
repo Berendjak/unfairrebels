@@ -58,16 +58,26 @@ export class AppComponent implements AfterViewInit, OnInit {
     }
   }
 
-  public updateGameArea() {
-    this.clear();
-    this.character.update();
-    this.character.draw();
-    this.maps = new Maps(this.ctx);
+  public startGame() {
+    this.character = new Character(this.ctx, 10, 30, this.canvas.width / 2 - 10, 400, 'green');
+    this.interval = setInterval(() => this.updateGameArea(), 20);
   }
 
-  public startGame() {
-    this.character = new Character(this.ctx, 10, 30, this.canvas.width / 2 - 30, 600, 'red');
-    this.interval = setInterval(() => this.updateGameArea(), 20);
+  public collisionY;
+  public collider() {
+    for (const obj of this.maps.notMovingGameObjects){
+      if (this.character.y + this.character.height <= obj.y) {
+          this.collisionY = obj.y - this.character.height;
+      }
+    }
+  }
+
+  public updateGameArea() {
+    this.clear();
+    this.maps = new Maps(this.ctx);
+    this.character.newPos();
+    this.character.draw(this.collisionY);
+    this.collider();
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -84,6 +94,7 @@ export class AppComponent implements AfterViewInit, OnInit {
       }
     }
   }
+
   @HostListener('document:keyup', ['$event'])
   public ControlsStop(event: KeyboardEvent) {
     if (event.keyCode === 39) {
