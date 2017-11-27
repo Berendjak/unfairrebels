@@ -6,7 +6,7 @@ export class MovingObject extends CanvasObject{
   public speedleftX: number;
   public speedrightX: number;
   public speedY: number;
-  public gravitySpeed;
+  public gravitySpeed: number;
 
   constructor(ctx, width, height, x, y, color){
     super(ctx, width, height, x, y, color);
@@ -16,20 +16,38 @@ export class MovingObject extends CanvasObject{
     this.gravitySpeed = 0;
   }
 
-  public newPos() {
-    if (this.y >= 600 && this.gravitySpeed >= 0) {
-       console.log(this.gravitySpeed);
+  public newPos(colFloor, floor, ceil, sideRight, sideLeft) {
+    if (this.y + this.height > floor && this.gravitySpeed >= 0) {
       this.gravitySpeed = 0;
-    } else if (this.gravitySpeed < 10) {
+    } else if (this.gravitySpeed < 20 && !colFloor) {
       this.gravitySpeed += gravity;
     }
 
-    this.x += this.speedleftX + this.speedrightX;
-    this.y += this.speedY + this.gravitySpeed;
-  }
-  
-  public update() {
-    this.newPos();
+    // Checks for the side collisions
+    // console.log(sideRight)
+    if (sideRight >= this.x + this.speedleftX) {
+      // Move right only
+      this.x += this.speedrightX;
+    } else if (sideLeft <= this.x + this.width + this.speedrightX) {
+      // Move left only
+      this.x += this.speedleftX;
+    } else {
+      // Move both sides
+      this.x += this.speedleftX + this.speedrightX;
+    }
+
+    // Checks for the floor collisions
+    if (this.y + this.gravitySpeed + this.height > floor){
+        this.y = floor - this.height;
+        this.gravitySpeed = 0;
+    } else {
+        this.y += this.gravitySpeed;
+    }
+    // Check for the ceiling collisions
+    if (this.y + this.gravitySpeed < ceil) {
+      this.y = ceil;
+      this.gravitySpeed = 0;
+    }
   }
 
   public stopright() {

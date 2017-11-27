@@ -14,8 +14,7 @@ export abstract class CanvasObject {
     this.width = width;
     this.height = height;
   }
-  public draw(y) {
-    this.y = y ? y : this.y;
+  public draw() {
     this.ctx.fillStyle = this.color;
     this.ctx.fillRect(this.x, this.y, this.width, this.height);
   }
