@@ -1,6 +1,7 @@
-import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
-import {Character} from './helpers/canvas.character';
-import {Maps} from './maps/maps';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Character } from './helpers/character.canvas';
+import { Maps } from './maps/maps';
+import { Controls } from './helpers/controls.canvas';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,11 @@ import {Maps} from './maps/maps';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements AfterViewInit, OnInit {
+  constructor(private controls: Controls) {}
+
   // Canvas
   public ctx;
+
   @ViewChild('myCanvas')
   public canvasRef: ElementRef;
   public canvas;
@@ -20,7 +24,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   // Update interval
   private interval;
 
-  // Character
+  // this.character
   private character: Character;
 
   // Sound
@@ -28,7 +32,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   public buttonStatus = 'MUTE';
   public toggle = true;
 
-  // For collisions platform with character
+  // For collisions platform with this.character
   public platformY = [];
   public platformX = [];
   public platformWidth = [];
@@ -36,16 +40,16 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   public colFloor: boolean;
   public yFloor: number;
-  public colCeil: boolean;
+  // public colCeil: boolean;
   public yCeil: number;
   public ySideRight: number;
   public ySideLeft: number;
-  public colSideRight: boolean;
-  public colSideLeft: boolean;
+  // public colSideRight: boolean;
+  // public colSideLeft: boolean;
 
   public char = {width: 10, height: 30, x: 0, y: 0, color: ''};
 
-  // Clears the last position of the character
+  // Clears the last position of the this.character
   public clearCharacter = () => {
     this.ctx.clearRect(this.character.x, this.character.y, this.character.width, this.character.height);
   }
@@ -88,22 +92,22 @@ export class AppComponent implements AfterViewInit, OnInit {
     this.char.y = this.platformY[this.platformX.indexOf(this.char.x)] - this.char.height;
     this.yFloor = Math.min.apply(null, this.platformY);
   }
-  // Calculates if there is a collision with the FLOOR of the GameObject and the character
+  // Calculates if there is a collision with the FLOOR of the GameObject and the this.this.character
   public colliderFloor() {
     for (const obj of this.maps.notMovingGameObjects) {
       if (this.character.y + this.character.height <= obj.y &&
-          this.character.y < obj.y + obj.height &&
-          this.character.x + this.character.width > obj.x &&
-          this.character.x < obj.width + obj.x) {
+        this.character.y < obj.y + obj.height &&
+        this.character.x + this.character.width > obj.x &&
+        this.character.x < obj.width + obj.x) {
         this.yFloor = obj.y;
         break;
       }
     }
     for (const obj of this.maps.notMovingGameObjects) {
       if (this.character.y + this.character.height === this.yFloor &&
-          this.character.y < obj.y + obj.height &&
-          this.character.x + this.character.width > obj.x &&
-          this.character.x < obj.width + obj.x) {
+        this.character.y < obj.y + obj.height &&
+        this.character.x + this.character.width > obj.x &&
+        this.character.x < obj.width + obj.x) {
         this.colFloor = true;
         break;
       } else {
@@ -111,7 +115,7 @@ export class AppComponent implements AfterViewInit, OnInit {
       }
     }
   }
-  // Calculates if there is a collision with the CEILING of the GameObject and the character
+  // Calculates if there is a collision with the CEILING of the GameObject and the this.character
   public colliderCeil() {
     const reversed = this.maps.notMovingGameObjects.slice();
     reversed.sort((a: any, b: any) => {
@@ -125,34 +129,33 @@ export class AppComponent implements AfterViewInit, OnInit {
     });
     for (const obj of reversed) {
       if (obj.y + obj.height <= this.character.y &&
-          this.character.x + this.character.width > obj.x &&
-          this.character.x < obj.width + obj.x) {
+        this.character.x + this.character.width > obj.x &&
+        this.character.x < obj.width + obj.x) {
         this.yCeil = obj.height + obj.y;
         break;
       } else {
         this.yCeil = 0;
       }
     }
-    console.log(this.yCeil)
   }
-  // Calculates if there is a collision with a side of the GameObject and the character
+  // Calculates if there is a collision with a side of the GameObject and the this.character
   public colliderSide() {
-    // Right side of the object with the left side of the character
+    // Right side of the object with the left side of the this.character
     for (const obj of this.maps.notMovingGameObjects) {
       if (obj.x + obj.width <= this.character.x &&
-          obj.y + obj.height >= this.character.y &&
-          obj.y <= this.character.y + this.character.height) {
+        obj.y + obj.height >= this.character.y &&
+        obj.y <= this.character.y + this.character.height) {
         this.ySideRight = obj.x + obj.width;
         break;
       } else {
         this.ySideRight = 0;
       }
     }
-    // Left side of the object with the right side og the character
+    // Left side of the object with the right side og the this.character
     for (const obj of this.maps.notMovingGameObjects) {
       if (obj.x >= this.character.x + this.character.width &&
-          obj.y + obj.height > this.character.y &&
-          obj.y < this.character.y + this.character.height) {
+        obj.y + obj.height > this.character.y &&
+        obj.y < this.character.y + this.character.height) {
         this.ySideLeft = obj.x;
         break;
       } else {
@@ -182,27 +185,12 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   @HostListener('document:keydown', ['$event'])
-  public Controls(event: KeyboardEvent) {
-    if (!event.altKey) {
-      if (event.keyCode === 38 && this.colFloor) {
-        this.character.moveup();
-      }
-      if (event.keyCode === 39) {
-        this.character.moveright();
-      }
-      if (event.keyCode === 37) {
-        this.character.moveleft();
-      }
-    }
+  public KeyDown(event: KeyboardEvent) {
+    this.controls.Move(event, this.character, this.colFloor);
   }
 
   @HostListener('document:keyup', ['$event'])
-  public ControlsStop(event: KeyboardEvent) {
-    if (event.keyCode === 39) {
-      this.character.stopright();
-    }
-    if (event.keyCode === 37) {
-      this.character.stopleft();
-    }
+  public KeyUp(event: KeyboardEvent) {
+    this.controls.StopMove(event, this.character);
   }
 }

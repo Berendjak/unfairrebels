@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LevelComponent } from './level/level.component';
 import { GameComponent } from './game/game.component';
+import { RestartComponent } from './restart/restart.component';
+import { Controls } from './helpers/controls.canvas';
 
 
 // The Routes are going in here!
@@ -30,7 +32,8 @@ const Routes: Routes = [
     AppComponent,
     HomeComponent,
     LevelComponent,
-    GameComponent
+    GameComponent,
+    RestartComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,7 @@ const Routes: Routes = [
       Routes,
     )
   ],
-  providers: [],
+  providers: [Controls],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

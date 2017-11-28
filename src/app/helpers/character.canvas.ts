@@ -1,4 +1,4 @@
-import { MovingObject } from './canvas.moving.object';
+import { MovingObject } from './moving.object.canvas';
 
 export class Character extends MovingObject{
   public moveup()     { this.gravitySpeed = -20; }

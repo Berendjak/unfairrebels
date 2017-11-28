@@ -1,4 +1,4 @@
-import { CanvasPlatform } from '../helpers/canvas.platform';
+import { CanvasPlatform } from '../helpers/platform.canvas';
 
 export class Maps {
 

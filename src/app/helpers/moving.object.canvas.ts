@@ -1,4 +1,4 @@
-import { CanvasObject } from './canvas.object';
+import { CanvasObject } from './object.canvas';
 
 const gravity = 1;
 
