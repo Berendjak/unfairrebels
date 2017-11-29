@@ -44,8 +44,8 @@ export class AppComponent implements AfterViewInit, OnInit {
   public yCeil: number;
   public ySideRight: number;
   public ySideLeft: number;
-  // public colSideRight: boolean;
-  // public colSideLeft: boolean;
+
+  public finishObject;
 
   public char = {width: 10, height: 30, x: 0, y: 0, color: ''};
 
@@ -91,6 +91,8 @@ export class AppComponent implements AfterViewInit, OnInit {
     this.char.x = Math.min.apply(null, this.platformX);
     this.char.y = this.platformY[this.platformX.indexOf(this.char.x)] - this.char.height;
     this.yFloor = Math.min.apply(null, this.platformY);
+
+    this.finishObject = this.maps.notMovingGameObjects.find(x => x.color === 'pink');
   }
   // Calculates if there is a collision with the FLOOR of the GameObject and the this.this.character
   public colliderFloor() {
@@ -151,7 +153,7 @@ export class AppComponent implements AfterViewInit, OnInit {
         this.ySideRight = 0;
       }
     }
-    // Left side of the object with the right side og the this.character
+    // Left side of the object with the right side of the this.character
     for (const obj of this.maps.notMovingGameObjects) {
       if (obj.x >= this.character.x + this.character.width &&
         obj.y + obj.height > this.character.y &&
@@ -173,14 +175,14 @@ export class AppComponent implements AfterViewInit, OnInit {
   public startGame() {
     this.maps = new Maps(this.ctx);
     this.platformPos();
-    this.character = new Character(this.ctx, this.char.width, this.char.height, this.char.x + 600, this.char.y, 'green');
-      this.interval = setInterval(() => this.updateGameArea(), 15);
+    this.character = new Character(this.ctx, this.char.width, this.char.height, this.char.x + 20, this.char.y, 'green');
+    this.interval = setInterval(() => this.updateGameArea(), 15);
   }
 
   public updateGameArea() {
     this.clearCharacter();
     this.collider();
-    this.character.newPos(this.colFloor, this.yFloor, this.yCeil, this.ySideRight, this.ySideLeft);
+    this.character.newPos(this.colFloor, this.yFloor, this.yCeil, this.ySideRight, this.ySideLeft, this.finishObject);
     this.character.draw();
   }
 

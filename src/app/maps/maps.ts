@@ -8,6 +8,7 @@ export class Maps {
     new CanvasPlatform(this.ctx, 600, 20, 700, 75, 'black'),
     new CanvasPlatform(this.ctx, 200, 20, 700, 600, 'red'),
     new CanvasPlatform(this.ctx, 200, 20, 550, 400, 'blue'),
+    new CanvasPlatform(this.ctx, 10, 100, 550, 200, 'pink'),
 
   ];
 
