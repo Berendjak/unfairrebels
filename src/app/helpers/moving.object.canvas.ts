@@ -16,43 +16,11 @@ export class MovingObject extends CanvasObject{
     this.gravitySpeed = 0;
   }
 
-  public newPos(colFloor, floor, ceil, sideRight, sideLeft, finishObject) {
+  public newPos(colFloor, floor) {
     if (this.y + this.height > floor && this.gravitySpeed >= 0) {
       this.gravitySpeed = 0;
     } else if (this.gravitySpeed < 20 && !colFloor) {
       this.gravitySpeed += gravity;
-    }
-
-    // Checks for the side collisions
-    console.log(finishObject, this.x + this.width + this.speedrightX)
-    if (finishObject.x <= this.x + this.width + this.speedrightX &&
-        finishObject.x + finishObject.width >= this.x + this.speedleftX &&
-    finishObject.y < this.y + this.gravitySpeed + this.height && finishObject.y + finishObject.height > this.y + this.gravitySpeed ) {
-      alert('finish!');
-    }
-
-    if (sideRight >= this.x + this.speedleftX) {
-      // Move right only
-      this.x += this.speedrightX;
-    } else if (sideLeft <= this.x + this.width + this.speedrightX) {
-      // Move left only
-      this.x += this.speedleftX;
-    } else {
-      // Move both sides
-      this.x += this.speedleftX + this.speedrightX;
-    }
-
-    // Checks for the floor collisions
-    if (this.y + this.gravitySpeed + this.height > floor){
-        this.y = floor - this.height;
-        this.gravitySpeed = 0;
-    } else {
-        this.y += this.gravitySpeed;
-    }
-    // Check for the ceiling collisions
-    if (this.y + this.gravitySpeed < ceil) {
-      this.y = ceil;
-      this.gravitySpeed = 0;
     }
   }
 

@@ -1,7 +1,15 @@
 import {CanvasObject} from './object.canvas';
 
 export class CanvasPlatform extends CanvasObject {
-  constructor(ctx, width, height, x, y, color){
+  public isCheckpoint: boolean;
+  public hasPassed: boolean;
+  public finish: boolean;
+
+  constructor(ctx, width, height, x, y, color, isCheckpoint, hasPassed, finish){
     super(ctx, width, height, x, y, color);
+    this.isCheckpoint = isCheckpoint;
+    this.hasPassed = hasPassed;
+    this.finish = finish;
+
   }
 }

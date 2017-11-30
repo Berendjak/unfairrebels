@@ -3,13 +3,20 @@ import { CanvasPlatform } from '../helpers/platform.canvas';
 export class Maps {
 
   public notMovingGameObjects = [
-    new CanvasPlatform(this.ctx, 99999, 5, 0, 700, 'blue'),
-    new CanvasPlatform(this.ctx, 600, 20, 0, 300, 'black'),
-    new CanvasPlatform(this.ctx, 600, 20, 700, 75, 'black'),
-    new CanvasPlatform(this.ctx, 200, 20, 700, 600, 'red'),
-    new CanvasPlatform(this.ctx, 200, 20, 550, 400, 'blue'),
-    new CanvasPlatform(this.ctx, 10, 100, 550, 200, 'pink'),
+    // Platform
+    new CanvasPlatform(this.ctx, 999999, 20, 0, 700, 'black', false, false, false),
+    new CanvasPlatform(this.ctx, 150, 20, 0, 300, 'black', false, false, false),
+    new CanvasPlatform(this.ctx, 500, 20, 200, 300, 'black', false, false, false),
+    new CanvasPlatform(this.ctx, 200, 20, 550, 400, 'blue', false, false, false),
+    new CanvasPlatform(this.ctx, 600, 20, 700, 100, 'black', false, false, false),
+    new CanvasPlatform(this.ctx, 200, 20, 700, 600, 'red', false, false, false),
 
+    // Checkpoints
+    new CanvasPlatform(this.ctx, 10, 50, 200, 150, 'blue', true, false, false),
+    new CanvasPlatform(this.ctx, 10, 150, 400, 250, 'brown', true, false, false),
+
+    // Finish
+    new CanvasPlatform(this.ctx, 10, 50, 800, 50, 'pink', false, false, true),
   ];
 
   constructor(public ctx) {

@@ -1,10 +1,10 @@
 export abstract class CanvasObject {
-  public ctx;
-  public width;
-  public height;
-  public x;
-  public y;
-  public color;
+  public ctx: any;
+  public width: number;
+  public height: number;
+  public x: number;
+  public y: number;
+  public color: string;
 
   constructor(ctx, width, height, x, y, color){
     this.ctx = ctx;
