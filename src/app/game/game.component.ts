@@ -41,16 +41,18 @@ export class GameComponent implements AfterViewInit, OnInit {
 
   public colFloor: boolean;
   public yFloor: number;
-  // public colCeil: boolean;
   public yCeil: number;
   public ySideRight: number;
   public ySideLeft: number;
 
   public finishObject;
   public checkpointObjects = [];
-  public checkpoint;
+  public checkpointHasPassed;
   public activeCheckpoint: number;
   public activeCheckpointObject;
+
+  public diffLeft = -5;
+  public diffRight = 5;
 
   public char = {width: 10, height: 30, x: 0, y: 0, color: 'green'};
 
@@ -62,14 +64,12 @@ export class GameComponent implements AfterViewInit, OnInit {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   // Happens after the page is loaded
   ngAfterViewInit(): void {
     this.activeRoute.params.subscribe((params: Params) => {
       this.activeCheckpoint = params.checkpoint;
-      // this.activeCheckpoint;
     });
     this.canvas = this.canvasRef.nativeElement;
     this.canvas.width = 1000;
@@ -81,48 +81,59 @@ export class GameComponent implements AfterViewInit, OnInit {
   // Gets the positions of the notMovingGameObjects
   public platformPos() {
     // Puts every element of a notMovingGameObject object in a separate array together
-    for (const obj of this.maps.notMovingGameObjects) {
-      this.platformY.push(obj.y);
-      this.platformX.push(obj.x);
-      this.platformWidth.push(obj.width);
-      this.platformHeight.push(obj.height);
-    }
-
-    this.yFloor = Math.min.apply(null, this.platformY);
-
+    this.platformY = Array.from(this.maps.notMovingGameObjects, x => x.y);
+    this.platformX = Array.from(this.maps.notMovingGameObjects, x => x.x);
+    this.platformWidth = Array.from(this.maps.notMovingGameObjects, x => x.width);
+    this.platformHeight = Array.from(this.maps.notMovingGameObjects, x => x.height);
+    // The finish object
     this.finishObject = this.maps.notMovingGameObjects.find(x => x.finish);
+    // Array with all the checkpoint objects
     this.checkpointObjects = this.maps.notMovingGameObjects.filter(x => x.isCheckpoint);
+
+    // First X of the character
+    this.char.x = this.canvas.width / 2;
+
+    // First Y floor
+    this.yFloor = Math.min.apply(null, this.platformY);
+    // The current checkpoint object
     this.activeCheckpointObject = this.checkpointObjects[this.activeCheckpoint];
 
+    const firstObject = this.maps.notMovingGameObjects.find(x => x.x === 0);
+
     if (this.activeCheckpoint <= -1 || this.activeCheckpoint >= this.checkpointObjects.length) {
-      this.char.x = this.checkpointObjects.some(x => x.hasPassed) ?
-        Math.max.apply(null, this.checkpointObjects.filter(x => x.hasPassed)) :
-        Math.min.apply(null, this.platformX);
-      this.char.y = this.checkpoint ? this.checkpoint : this.platformY[this.platformX.indexOf(this.char.x)] - this.char.height;
+      for (const obj of this.maps.notMovingGameObjects) {
+        obj.x += this.char.x - 20;
+      }
+      this.char.y = firstObject.y - this.char.height;
     } else if (this.activeCheckpoint >= 0) {
-      this.char.x = this.activeCheckpointObject.x;
+      const del = this.activeCheckpointObject.x - this.char.x;
+      for (const obj of this.maps.notMovingGameObjects) {
+        obj.x -= del;
+      }
       this.char.y = this.activeCheckpointObject.y - this.char.height;
     }
 
   }
 
+  // Calculates if the character hasPassed a specific checkpoint for the restart
   public Checkpoint() {
-    this.checkpoint = this.checkpointObjects.filter(x => x.hasPassed)
-      .find(a => a.x === (this.checkpointObjects
-        .filter(x => x.hasPassed).length === 1 ? a.x : Math.max
-        .apply(null, Array.from(this.checkpointObjects, b => b.x))) && a.hasPassed);
+    // Checks if character has passed a checkpoint and sets has passed to true
     for (const checkpoint of this.checkpointObjects) {
       if (this.character.x + this.character.width >= checkpoint.x) {
         checkpoint.hasPassed = true;
       }
     }
+    // Gets the furthest checkpoint which the character has passed
+    this.checkpointHasPassed = this.checkpointObjects.filter(x => x.hasPassed)
+      .find(a => a.x === (this.checkpointObjects
+        .filter(x => x.hasPassed).length === 1 ? a.x : Math.max
+        .apply(null, Array.from(this.checkpointObjects, b => b.x))) && a.hasPassed);
   }
-
   // Calculates the collision with thi finishObject and the character
   public colliderFinish(){
     // Checks for the side collisions
-    if (this.finishObject.x <= this.character.x + this.character.width + this.character.speedrightX &&
-      this.finishObject.x + this.finishObject.width >= this.character.x + this.character.speedleftX &&
+    if (this.finishObject.x <= this.character.x + this.character.width - this.maps.notMovingGameObjects[0].speedrightX &&
+      this.finishObject.x + this.finishObject.width >= this.character.x + this.maps.notMovingGameObjects[0].speedleftX &&
       this.finishObject.y <= this.character.y + this.character.gravitySpeed + this.character.height &&
       this.finishObject.y + this.finishObject.height >= this.character.y + this.character.gravitySpeed ) {
       clearInterval(this.interval);
@@ -131,7 +142,17 @@ export class GameComponent implements AfterViewInit, OnInit {
   }
   // Calculates if there is a collision with the FLOOR of the GameObject and the character
   public colliderFloor() {
-    for (const obj of this.maps.notMovingGameObjects) {
+    const reversed2 = this.maps.notMovingGameObjects.slice();
+    reversed2.sort((a: any, b: any) => {
+      if (a.y < b.y) {
+        return -1;
+      } else if (a.y > b.y) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    for (const obj of reversed2) {
       if (this.character.y + this.character.height <= obj.y &&
         this.character.y < obj.y + obj.height &&
         this.character.x + this.character.width > obj.x &&
@@ -140,7 +161,7 @@ export class GameComponent implements AfterViewInit, OnInit {
         break;
       }
     }
-    for (const obj of this.maps.notMovingGameObjects) {
+    for (const obj of reversed2) {
       if (this.character.y + this.character.height === this.yFloor &&
         this.character.y < obj.y + obj.height &&
         this.character.x + this.character.width > obj.x &&
@@ -182,7 +203,8 @@ export class GameComponent implements AfterViewInit, OnInit {
       }
     }
     // Check for the ceiling collisions
-    if (this.character.y + this.character.gravitySpeed < this.yCeil) {
+    // console.log(this.character.y, this.yCeil, this.character.y - this.yCeil > 20);
+    if (this.character.y + this.character.gravitySpeed <= this.yCeil) {
       this.character.y = this.yCeil;
       this.character.gravitySpeed = 0;
     }
@@ -190,46 +212,71 @@ export class GameComponent implements AfterViewInit, OnInit {
   // Calculates if there is a collision with a side of the GameObject and the character
   public colliderSide() {
     const reversed = this.maps.notMovingGameObjects.slice();
+    const reversed2 = this.maps.notMovingGameObjects.slice();
     reversed.sort((a: any, b: any) => {
-      if (a.y > b.y) {
+      if (a.x > b.x) {
         return -1;
-      } else if (a.y < b.y) {
+      } else if (a.x < b.x) {
         return 1;
       } else {
         return 0;
       }
     });
+    reversed2.sort((a: any, b: any) => {
+      if (a.x < b.x) {
+        return -1;
+      } else if (a.x > b.x) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
     // Right side of the object with the left side of the this.character
     for (const obj of reversed) {
       if (obj.x + obj.width <= this.character.x &&
-        obj.y + obj.height >= this.character.y &&
-        obj.y < this.character.y + this.character.height) {
+          obj.y + obj.height >= this.character.y &&
+          obj.y < this.character.y + this.character.height) {
+        console.log( obj.x + obj.width <= this.character.x,
+          obj.y + obj.height >= this.character.y,
+          obj.y < this.character.y + this.character.height);
         this.ySideRight = obj.x + obj.width;
+        if (this.character.x - this.ySideRight < 5) {
+          this.diffRight = this.character.x - this.ySideRight;
+        }
         break;
       } else {
         this.ySideRight = 0;
+        this.diffRight = 5;
       }
     }
     // Left side of the object with the right side of the this.character
-    for (const obj of this.maps.notMovingGameObjects) {
+    for (const obj of reversed2) {
       if (obj.x >= this.character.x + this.character.width &&
-        obj.y + obj.height >= this.character.y &&
-        obj.y < this.character.y + this.character.height) {
+          obj.y + obj.height >= this.character.y &&
+          obj.y < this.character.y + this.character.height) {
+        console.log(obj.x >= this.character.x + this.character.width,
+          obj.y + obj.height >= this.character.y,
+          obj.y < this.character.y + this.character.height);
         this.ySideLeft = obj.x;
+        if (this.character.x + this.character.width - this.ySideLeft > -5) {
+          this.diffLeft = this.character.x + this.character.width - this.ySideLeft;
+        }
         break;
       } else {
         this.ySideLeft = undefined;
+        this.diffLeft = -5;
       }
     }
-    if (this.ySideRight >= this.character.x + this.character.speedleftX) {
+    if (this.ySideRight > this.character.x - this.maps.notMovingGameObjects[0].speedleftX) {
       // Move right only
-      this.character.x += this.character.speedrightX;
-    } else if (this.ySideLeft <= this.character.x + this.character.width + this.character.speedrightX) {
+      this.maps.newPosAll('right');
+    } else if (this.ySideLeft < this.character.x + this.character.width - this.maps.notMovingGameObjects[0].speedrightX) {
       // Move left only
-      this.character.x += this.character.speedleftX;
+      this.maps.newPosAll('left');
     } else {
       // Move both sides
-      this.character.x += this.character.speedleftX + this.character.speedrightX;
+      this.maps.newPosAll('both');
     }
   }
 
@@ -251,27 +298,27 @@ export class GameComponent implements AfterViewInit, OnInit {
     if (this.character.y >= this.canvas.height){
       clearInterval(this.interval);
       this.clearCanvas();
-      this.router.navigate(['/restart', this.checkpointObjects.indexOf(this.checkpoint)]);
+      this.router.navigate(['/restart', this.checkpointObjects.indexOf(this.checkpointHasPassed)]);
     }
   }
 
   public updateGameArea() {
-    this.clearCharacter();
-    this.collider();
+    this.clearCanvas();
     this.character.newPos(this.colFloor, this.yFloor);
     this.character.draw();
+    this.maps.drawAll();
+    this.collider();
     this.GameOver();
-    console.log(this.character.x, this.character.y)
   }
 
   @HostListener('document:keydown', ['$event'])
   public KeyDown(event: KeyboardEvent) {
-    this.controls.Move(event, this.character, this.colFloor);
+    this.controls.Move(event, this.character, this.colFloor, this.maps.notMovingGameObjects, this.yCeil, this.diffLeft, this.diffRight);
   }
 
   @HostListener('document:keyup', ['$event'])
   public KeyUp(event: KeyboardEvent) {
-    this.controls.StopMove(event, this.character);
+    this.controls.StopMove(event, this.maps.notMovingGameObjects);
   }
 
 }

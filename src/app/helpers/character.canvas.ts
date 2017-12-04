@@ -1,8 +1,13 @@
-import { MovingObject } from './moving.object.canvas';
+import { YMovingObject } from './y.moving.object.canvas';
 
-export class Character extends MovingObject{
-  public moveup()     { this.gravitySpeed = -20; }
-  public moveleft()   { this.speedleftX = -5; }
-  public moveright()  { this.speedrightX = 5; }
+export class Character extends YMovingObject{
+  public moveup(ceil) {
+    if (this.y - ceil < 20) {
+      this.gravitySpeed = -(this.y - ceil);
+      console.log(this.gravitySpeed);
+    }else {
+      this.gravitySpeed = -20;
+    }
+  }
 }
 

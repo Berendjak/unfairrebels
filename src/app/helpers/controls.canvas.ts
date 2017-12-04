@@ -2,26 +2,34 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class Controls {
-  public Move(event: KeyboardEvent, character, col) {
+  public Move(event: KeyboardEvent, character, col, gameObjects, ceil, speedLeft, speedRight) {
     if (!event.altKey) {
       if (event.keyCode === 38 && col) {
-        character.moveup();
+        character.moveup(ceil);
       }
       if (event.keyCode === 39) {
-        character.moveright();
+        for (const obj of gameObjects) {
+          obj.moveright(speedLeft);
+        }
       }
       if (event.keyCode === 37) {
-        character.moveleft();
+        for (const obj of gameObjects) {
+          obj.moveleft(speedRight);
+        }
       }
     }
   }
 
-  public StopMove(event: KeyboardEvent, character) {
+  public StopMove(event: KeyboardEvent, gameObjects) {
     if (event.keyCode === 39) {
-      character.stopright();
+      for (const obj of gameObjects) {
+        obj.stopright();
+      }
     }
     if (event.keyCode === 37) {
-      character.stopleft();
+      for (const obj of gameObjects) {
+        obj.stopleft();
+      }
     }
   }
 }
