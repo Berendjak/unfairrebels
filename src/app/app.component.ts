@@ -16,8 +16,6 @@ export class AppComponent implements OnInit{
 
   // Happens parallel with the page load
   ngOnInit(): void {
-    this.sound.audio.src = '../assets/sounds/theme.mp3';
-    this.sound.audio.load();
-    this.sound.audio.play();
+    this.sound.soundBack('../assets/sounds/theme.mp3');
   }
 }

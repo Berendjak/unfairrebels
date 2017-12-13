@@ -4,22 +4,29 @@ import { Injectable } from '@angular/core';
 export class SoundService {
   constructor() { }
 
-  // Sound
-  public audio = new Audio();
+  // soundBack
+  public audioBack = new Audio();
   public buttonStatus = 'MUTE';
   public toggle = true;
 
+  public audioChar = new Audio();
+
   // Function for toggling the sound
-  public Sound() {
+  public soundBack(url) {
     this.toggle = !this.toggle;
     this.buttonStatus = this.toggle ? 'MUTE' : 'SOUND';
 
     if (this.toggle) {
-      this.audio.src = '../assets/sounds/theme.mp3';
-      this.audio.load();
-      this.audio.play();
+      this.audioBack.src = url;
+      this.audioBack.load();
+      this.audioBack.play();
     } else {
-      this.audio.src = '';
+      this.audioBack.src = '';
     }
+  }
+  public soundChar(url) {
+    this.audioChar.src = url;
+    this.audioChar.load();
+    this.audioChar.play();
   }
 }
