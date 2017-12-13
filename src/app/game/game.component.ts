@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
-import { Character} from '../objects/character.object';
+import { CharacterMovement} from '../helpers/character.moving.canvas';
 import { Maps} from './../maps/maps';
 import { Controls} from './../helpers/controls.canvas';
 import { SoundService} from '../services/sound.service';
@@ -34,7 +34,7 @@ export class GameComponent implements AfterViewInit, OnInit {
   private interval;
 
   // character
-  private character: Character;
+  private character: CharacterMovement;
 
   // For collisions platform with this.character
   public platformY = [];
@@ -147,7 +147,7 @@ export class GameComponent implements AfterViewInit, OnInit {
       setTimeout(() => {
         this.clearInterval();
         this.router.navigate(['/finish']);
-      }, 300);
+      }, 200);
     }
   }
   // Calculates if there is a collision with the FLOOR of the GameObject and the character
@@ -261,10 +261,10 @@ export class GameComponent implements AfterViewInit, OnInit {
   }
 
   public startGame() {
-    this.maps = new Maps(this.ctx);
+    this.maps = new Maps(this.ctx, this.activeRoute);
     this.platformPos();
     this.charImg.src = '../../assets/characters/r2d2.png';
-    this.character = new Character({ctx: this.ctx, x: this.char.x, y: this.char.y, width: this.char.width, height: this.char.height, img: this.charImg});
+    this.character = new CharacterMovement({ctx: this.ctx, x: this.char.x, y: this.char.y, width: this.char.width, height: this.char.height, img: this.charImg});
     this.interval = setInterval(() => this.updateGameArea(), 15);
   }
 

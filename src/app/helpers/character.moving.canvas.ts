@@ -1,7 +1,7 @@
-import { CanvasObject } from '../helpers/object.canvas';
+import { CanvasObject } from './object.canvas';
 
 const gravity = 1;
-export class Character extends CanvasObject{
+export class CharacterMovement extends CanvasObject{
   public gravitySpeed: number;
 
   constructor(params){

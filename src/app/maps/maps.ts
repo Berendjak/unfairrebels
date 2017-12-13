@@ -1,6 +1,7 @@
 import { PlatformObject } from '../objects/platform.object';
 import { Tatooine } from './tatooine';
 import { FinishObject } from '../objects/finish.object';
+import { Params } from '@angular/router';
 
 
 export class Maps {
@@ -22,15 +23,19 @@ export class Maps {
     new PlatformObject({ctx: this.ctx, x: -1000,    y: -200, width: 1,      height: 1000}),
     new PlatformObject({ctx: this.ctx, x: 999999,   y: -200, width: 1,      height: 1000}),
   ];
-  public platformObjects = [];
-  public trapObjects = [];
-  public checkpointObjects = [];
-  public enemyObjects = [];
+  public platformObjects    = [];
+  public trapObjects        = [];
+  public checkpointObjects  = [];
+  public enemyObjects       = [];
   public finishObject: FinishObject;
 
   public level = 0;
 
-  constructor(public ctx) {
+  constructor(public ctx, private activeRoute) {
+    this.activeRoute.params.subscribe((params: Params) => {
+      if (params.level <= this.maps.length - 1 && params.level > 0)
+      this.level = params.level;
+    });
     this.filler();
     this.sorter();
   }

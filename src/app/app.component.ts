@@ -1,5 +1,5 @@
 // import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-// import { Character } from './helpers/character.canvas';
+// import { CharacterMovement } from './helpers/character.canvas';
 // import { Maps } from './maps/maps';
 // import { Controls } from './helpers/controls.canvas';
 

@@ -24,11 +24,11 @@ const Routes: Routes = [
     component: LevelComponent
   },
   {
-    path: 'game/:checkpoint',
+    path: 'game/:level/:checkpoint',
     component: GameComponent
   },
   {
-    path: 'restart/:checkpoint',
+    path: 'restart/:level/:checkpoint',
     component: RestartComponent
   },
   {
