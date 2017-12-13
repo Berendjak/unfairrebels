@@ -53,6 +53,8 @@ export class GameComponent implements AfterViewInit, OnInit {
   public activeCheckpoint: number;
   public activeCheckpointObject;
 
+  public activeLevel: number;
+
   public diffLeft = -5;
   public diffRight = 5;
 
@@ -82,6 +84,7 @@ export class GameComponent implements AfterViewInit, OnInit {
   ngAfterViewInit(): void {
     this.activeRoute.params.subscribe((params: Params) => {
       this.activeCheckpoint = params.checkpoint;
+      this.activeLevel = params.level;
     });
     this.canvas = this.canvasRef.nativeElement;
     this.canvas.width = 1000;
@@ -280,7 +283,7 @@ export class GameComponent implements AfterViewInit, OnInit {
       this.clearInterval(),
       clearInterval(interval);
       this.clearCanvas(),
-      this.router.navigate(['/restart', this.maps.checkpointObjects.indexOf(this.checkpointHasPassed)]);
+      this.router.navigate(['/restart', this.activeLevel, this.activeCheckpoint]);
     }, 1000);
   }
 
