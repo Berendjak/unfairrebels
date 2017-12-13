@@ -11,10 +11,12 @@ export class RestartComponent implements OnInit {
   constructor(private activeRoute: ActivatedRoute) {}
 
   public checkpoint: number;
+  public level: number;
 
   ngOnInit() {
     this.activeRoute.params.subscribe((params: Params) => {
       this.checkpoint = params.checkpoint;
+      this.level = params.level;
     });
   }
 }
