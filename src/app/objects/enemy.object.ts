@@ -43,6 +43,6 @@ export class EnemyObject extends XMovingObject {
   }
 
   public bullet() {
-    this.bullets.push(new BulletObject({ctx: this.ctx, x: parseInt(this.x.toString(), 10), y: this.y + (this.height / 2), width: 20, height: 5, color: 'green'}, this.speedLeftX, this.speedRightX, this.fireSpeed));
+    this.bullets.push(new BulletObject({ctx: this.ctx, x: parseInt(this.x.toString(), 10), y: this.y + (this.height / 2), width: 40, height: 3}, this.speedLeftX, this.speedRightX, this.fireSpeed));
   }
 }

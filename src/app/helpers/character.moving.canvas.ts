@@ -1,7 +1,7 @@
-import { CanvasObject } from './object.canvas';
+import { ObjectCanvas } from './object.canvas';
 
 const gravity = 1;
-export class CharacterMovement extends CanvasObject{
+export class CharacterMovement extends ObjectCanvas{
   public gravitySpeed: number;
 
   constructor(params){
@@ -16,11 +16,11 @@ export class CharacterMovement extends CanvasObject{
       this.y += this.gravitySpeed;
     }
   }
-  public moveUp(ceil) {
-    if (this.y - ceil < 20) {
+  public moveUp(ceil, gravitySpeed = -20) {
+    if (this.y - ceil < -gravitySpeed) {
       this.gravitySpeed = -(this.y - ceil);
     } else {
-      this.gravitySpeed = -20;
+      this.gravitySpeed = gravitySpeed;
     }
   }
 }

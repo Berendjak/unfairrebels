@@ -27,6 +27,7 @@ export class Maps {
   public trapObjects        = [];
   public checkpointObjects  = [];
   public enemyObjects       = [];
+  public jumpObjects        = [];
   public finishObject: FinishObject;
 
   public level = 0;
@@ -45,10 +46,11 @@ export class Maps {
     this.trapObjects = this.maps[this.level].trapObjects;
     this.checkpointObjects = this.maps[this.level].checkpointObjects;
     this.enemyObjects = this.maps[this.level].enemyObjects;
+    this.jumpObjects = this.maps[this.level].jumpObjects;
     this.finishObject = this.maps[this.level].finishObject;
 
     this.xMovingObjects = this.platformObjects
-      .concat(this.checkpointObjects, this.finishObject, this.outline);
+      .concat(this.checkpointObjects, this.finishObject, this.jumpObjects, this.outline);
     this.allObjects = this.xMovingObjects
       .concat(this.trapObjects, this.enemyObjects);
   }
@@ -95,7 +97,6 @@ export class Maps {
       }
     });
   }
-
   public drawAll(canvas) {
     // Draws all objects visible in the canvas
     for (const obj of this.allObjects) {
@@ -105,7 +106,7 @@ export class Maps {
         obj.y + obj.height > 0) || obj.isTouched) {
         obj.draw();
       }
-    } for (const obj of this.maps[0].enemyObjects) {
+    } for (const obj of this.maps[this.level].enemyObjects) {
       if (obj.bullets[obj.bullets.length - 1]) {
         for (const bul of obj.bullets) {
           // If the bullet does not yet exist in the array, add it
@@ -125,7 +126,7 @@ export class Maps {
   public newPosAll(dir) {
     for (const obj of this.allObjects) {
       obj.newPosX(dir);
-    } for (const obj of this.maps[0].enemyObjects) {
+    } for (const obj of this.maps[this.level].enemyObjects) {
       obj.newPosY();
     }
   }

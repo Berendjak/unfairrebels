@@ -5,8 +5,12 @@ import { Controls} from './../helpers/controls.canvas';
 import { SoundService} from '../services/sound.service';
 import { ActivatedRoute, Params, Router} from '@angular/router';
 import { TrapObject} from '../objects/trap.object';
-import { XMovingObject} from '../helpers/x.moving.canvas';
+import { XMovingObject } from '../helpers/x.moving.canvas';
 import { BulletObject } from '../objects/bullet.object';
+import { CheckpointObject } from '../objects/checkpoint.object';
+import { Message } from '../helpers/message.canvas';
+import { FinishObject } from '../objects/finish.object';
+import { JumpObject } from '../objects/jump.object';
 
 @Component({
   selector: 'app-game',
@@ -18,7 +22,7 @@ export class GameComponent implements AfterViewInit, OnInit {
   constructor(private controls: Controls,
               private sound: SoundService,
               private router: Router,
-              private activeRoute: ActivatedRoute) {}
+              private activeRoute: ActivatedRoute ) {}
 
   // Canvas
   public ctx;
@@ -43,13 +47,12 @@ export class GameComponent implements AfterViewInit, OnInit {
   public platformHeight = [];
 
   public colFloor: boolean;
-
   public curFloorObject: XMovingObject;
   public curCeilObject: XMovingObject;
   public curRightObject: XMovingObject;
   public curLeftObject: XMovingObject;
 
-  public checkpointHasPassed;
+  public checkpointHasPassed: CheckpointObject;
   public activeCheckpoint: number;
   public activeCheckpointObject;
 
@@ -62,6 +65,10 @@ export class GameComponent implements AfterViewInit, OnInit {
   public charImg = new Image();
 
   public gameOverCalled = false;
+
+  public message: Message;
+  public currentSeconds;
+  public checkpointSec: number;
 
   public hasCollided = (obj) => {
     return obj.x <= this.character.x + this.character.width - this.maps.allObjects[0].speedRightX &&
@@ -126,15 +133,23 @@ export class GameComponent implements AfterViewInit, OnInit {
       for (const obj of this.maps.allObjects) {
         obj.x -= del;
       }
-      this.char.y = this.activeCheckpointObject.y - this.char.height;
+      this.char.y = this.activeCheckpointObject.y - this.char.height + this.activeCheckpointObject.height;
     }
   }
   // Calculates if the character hasPassed a specific checkpoint for the restart
   public checkpoints() {
+    this.currentSeconds = new Date().getTime() / 1000;
+    const date = new Date();
     // Checks if character has passed a checkpoint and sets has passed to true
     for (const checkpoint of this.maps.checkpointObjects) {
       if (this.character.x + this.character.width >= checkpoint.x) {
+        if (!checkpoint.hasPassed) {
+          this.checkpointSec = date.getTime() / 1000;
+          this.message = new Message({ctx: this.ctx, msg: 'Checkpoint Passed', x: this.canvas.width / 2 - 100, y: 50, color: '#08c9fb'});
+        }
         checkpoint.hasPassed = true;
+        if (this.checkpointSec + 3 >= this.currentSeconds && checkpoint.hasPassed)
+          this.message.draw();
       }
     }
     // Gets the furthest checkpoint which the character has passed
@@ -159,7 +174,8 @@ export class GameComponent implements AfterViewInit, OnInit {
       if (this.character.y + this.character.height <= obj.y &&
         this.character.y < obj.y + obj.height &&
         this.character.x + this.character.width > obj.x &&
-        this.character.x < obj.width + obj.x) {
+        this.character.x < obj.width + obj.x &&
+        !(obj instanceof FinishObject) && !(obj instanceof CheckpointObject)) {
         this.curFloorObject = obj;
         break;
       }
@@ -179,11 +195,13 @@ export class GameComponent implements AfterViewInit, OnInit {
     if (this.character.y + this.character.gravitySpeed + this.character.height >= this.curFloorObject.y) {
       this.character.gravitySpeed = 0;
       this.character.y = this.curFloorObject.y - this.character.height;
+
       if (this.curFloorObject instanceof TrapObject) {
         this.curFloorObject.isTouched = true;
-      }
-      if (this.curFloorObject instanceof BulletObject && !this.gameOverCalled) {
+      } if (this.curFloorObject instanceof BulletObject && !this.gameOverCalled) {
         this.gameOver();
+      } if (this.curFloorObject instanceof JumpObject) {
+        this.character.moveUp(this.curCeilObject, -30);
       }
     } else {
       this.character.newPosY(true);
@@ -194,7 +212,8 @@ export class GameComponent implements AfterViewInit, OnInit {
     for (const obj of this.maps.yDesc) {
       if (obj.y + obj.height <= this.character.y &&
         this.character.x + this.character.width > obj.x &&
-        this.character.x < obj.width + obj.x) {
+        this.character.x < obj.width + obj.x &&
+        !(obj instanceof FinishObject) && !(obj instanceof CheckpointObject)) {
         this.curCeilObject = obj;
         break;
       }
@@ -208,7 +227,7 @@ export class GameComponent implements AfterViewInit, OnInit {
       }
     }
   }
-  // Calculates if there is a collision with a side of the GameObject and the character
+  // Calculates if there is a collision with a SIDE of the GameObject and the character
   public colliderSides() {
     // Right side of the object with the left side of the this.character
     for (const obj of this.maps.xDesc) {
@@ -239,13 +258,15 @@ export class GameComponent implements AfterViewInit, OnInit {
       }
     }
     if (this.curRightObject.x + this.curRightObject.width > this.character.x - this.maps.allObjects[this.maps.allObjects.indexOf(this.curRightObject)].speedLeftX -
-      (this.maps.allObjects[this.maps.allObjects.indexOf(this.curRightObject)].velocity ? this.maps.allObjects[this.maps.allObjects.indexOf(this.curRightObject)].velocity : 0)) {
+      (this.maps.allObjects[this.maps.allObjects.indexOf(this.curRightObject)].velocity ? this.maps.allObjects[this.maps.allObjects.indexOf(this.curRightObject)].velocity : 0) &&
+      !(this.curRightObject instanceof CheckpointObject) && !(this.curRightObject instanceof FinishObject)) {
       this.maps.newPosAll('right');
       if (this.curRightObject instanceof BulletObject && !this.gameOverCalled) {
         this.gameOver();
       }
     } else if (this.curLeftObject.x < this.character.x + this.character.width - this.maps.allObjects[this.maps.allObjects.indexOf(this.curLeftObject)].speedRightX -
-      (this.maps.allObjects[this.maps.allObjects.indexOf(this.curLeftObject)].velocity ? this.maps.allObjects[this.maps.allObjects.indexOf(this.curLeftObject)].velocity : 0)) {
+      (this.maps.allObjects[this.maps.allObjects.indexOf(this.curLeftObject)].velocity ? this.maps.allObjects[this.maps.allObjects.indexOf(this.curLeftObject)].velocity : 0) &&
+      !(this.curLeftObject instanceof CheckpointObject) && !(this.curLeftObject instanceof FinishObject)) {
       this.maps.newPosAll('left');
       if (this.curLeftObject instanceof BulletObject && !this.gameOverCalled) {
         this.gameOver();
@@ -283,16 +304,16 @@ export class GameComponent implements AfterViewInit, OnInit {
       this.clearInterval(),
       clearInterval(interval);
       this.clearCanvas(),
-      this.router.navigate(['/restart', this.activeLevel, this.activeCheckpoint]);
+      this.router.navigate(['/restart', this.activeLevel, this.maps.checkpointObjects.indexOf(this.checkpointHasPassed)]);
     }, 1000);
   }
 
   public updateGameArea() {
-    if (!this.gameOverCalled) { this.collider(); }
     this.clearCanvas();
+    if (!this.gameOverCalled) { this.collider(); }
+    this.maps.drawAll(this.canvas);
     if (!this.gameOverCalled) { this.character.newPosY(this.colFloor);
                                 this.character.draw(); }
-    this.maps.drawAll(this.canvas);
     if (this.character.y >= this.canvas.height && !this.gameOverCalled) {
       this.gameOver();
     }

@@ -4,16 +4,15 @@ import { Injectable } from '@angular/core';
 export class Controls {
   public Move(event: KeyboardEvent, character, col, gameObjects, ceil, speedLeft, speedRight) {
     if (!event.altKey) {
-      // console.log(event)
-      if ((event.keyCode === 38 || event.which === 38) && col) {
+      if ((event.keyCode === 38 || event.keyCode === 32) && col) {
         character.moveUp(ceil);
       }
-      if ((event.keyCode === 39 || event.which === 39)) {
+      if (event.keyCode === 39) {
         for (const obj of gameObjects) {
           obj.moveRight(speedLeft);
         }
       }
-      if ((event.keyCode === 37 || event.which === 37)) {
+      if ((event.keyCode === 37)) {
         for (const obj of gameObjects) {
           obj.moveLeft(speedRight);
         }

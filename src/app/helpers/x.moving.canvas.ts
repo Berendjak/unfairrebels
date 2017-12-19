@@ -1,6 +1,6 @@
-import { CanvasObject } from './object.canvas';
+import { ObjectCanvas } from './object.canvas';
 
-export class XMovingObject extends CanvasObject{
+export class XMovingObject extends ObjectCanvas{
   public speedLeftX:  number;
   public speedRightX: number;
 
