@@ -139,18 +139,17 @@ export class GameComponent implements AfterViewInit, OnInit {
   // Calculates if the character hasPassed a specific checkpoint for the restart
   public checkpoints() {
     this.currentSeconds = new Date().getTime() / 1000;
-    const date = new Date();
+    // this.checkpointSec = new Date();
     // Checks if character has passed a checkpoint and sets has passed to true
     for (const checkpoint of this.maps.checkpointObjects) {
       if (this.character.x + this.character.width >= checkpoint.x) {
         if (!checkpoint.hasPassed) {
-          this.checkpointSec = date.getTime() / 1000;
+          this.checkpointSec = new Date().getTime() / 1000;
           this.message = new Message({ctx: this.ctx, msg: 'Checkpoint Passed', x: this.canvas.width / 2 - 100, y: 50, color: '#08c9fb'});
         }
         checkpoint.hasPassed = true;
-        if (this.checkpointSec + 3 >= this.currentSeconds && checkpoint.hasPassed)
-          this.message.draw();
-      }
+      } if (this.checkpointSec + 3 >= this.currentSeconds && checkpoint.hasPassed)
+        this.message.draw();
     }
     // Gets the furthest checkpoint which the character has passed
     this.checkpointHasPassed = this.maps.checkpointObjects.filter(x => x.hasPassed)
