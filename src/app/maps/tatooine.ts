@@ -2,8 +2,9 @@ import { PlatformObject } from '../objects/platform.object';
 import { TrapObject } from '../objects/trap.object';
 import { CheckpointObject } from '../objects/checkpoint.object';
 import { FinishObject } from '../objects/finish.object';
-import { EnemyObject } from '../objects/enemy.object';
+import { EnemyMovingObject } from '../objects/enemy.moving.object';
 import { JumpObject } from '../objects/jump.object';
+import { EnemyObject } from '../objects/enemy.object';
 
 export class Tatooine {
   constructor(public ctx) {}
@@ -69,13 +70,14 @@ export class Tatooine {
       new CheckpointObject({ctx: this.ctx, x: 1550, y: 290}),
     ],
     jumpObjects: [
-      // new JumpObject({ctx: this.ctx, x: 300, y: 200, width: 50, height: 50, color: 'yellow'})
+      new JumpObject({ctx: this.ctx, x: 300, y: 200, width: 50, height: 50, color: 'yellow'})
+    ],
+    enemyMovingObjects: [
+       new EnemyMovingObject({ctx: this.ctx, x: 200, y: 200}),
     ],
     enemyObjects: [
-       new EnemyObject({ctx: this.ctx, x: 200, y: 200, width: 115, height: 100}),
-      // new EnemyObject({ctx: this.ctx, x: 1500, y: 200, width: 50, height: 50, color: 'red'})
+      new EnemyObject({ctx: this.ctx, x: 300, y: 300})
     ],
-
     finishObject: new FinishObject({ctx: this.ctx, x: 1700, y: 450})
   };
 }

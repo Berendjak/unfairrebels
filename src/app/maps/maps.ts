@@ -7,7 +7,7 @@ import { Params } from '@angular/router';
 export class Maps {
   public maps = [
     new Tatooine(this.ctx).tatooineObjects
-  ]
+  ];
 
   public allObjects = [];
   public xMovingObjects = [];
@@ -19,16 +19,19 @@ export class Maps {
 
   public outline = [
     new PlatformObject({ctx: this.ctx, x: -1000,    y: -200, width: 999999, height: 1}),
-    new PlatformObject({ctx: this.ctx, x: -1000,    y: 700,  width: 999999, height: 1}),
+    new PlatformObject({ctx: this.ctx, x: -1000,    y: 800,  width: 999999, height: 1}),
     new PlatformObject({ctx: this.ctx, x: -1000,    y: -200, width: 1,      height: 1000}),
     new PlatformObject({ctx: this.ctx, x: 999999,   y: -200, width: 1,      height: 1000}),
   ];
   public platformObjects    = [];
   public trapObjects        = [];
   public checkpointObjects  = [];
+  public enemyMovingObjects = [];
   public enemyObjects       = [];
   public jumpObjects        = [];
   public finishObject: FinishObject;
+
+  public shootingObjects    = [];
 
   public level = 0;
 
@@ -45,14 +48,16 @@ export class Maps {
     this.platformObjects = this.maps[this.level].platformObjects;
     this.trapObjects = this.maps[this.level].trapObjects;
     this.checkpointObjects = this.maps[this.level].checkpointObjects;
+    this.enemyMovingObjects = this.maps[this.level].enemyMovingObjects;
     this.enemyObjects = this.maps[this.level].enemyObjects;
     this.jumpObjects = this.maps[this.level].jumpObjects;
     this.finishObject = this.maps[this.level].finishObject;
+    this.shootingObjects = this.enemyMovingObjects.concat(this.enemyObjects);
 
     this.xMovingObjects = this.platformObjects
-      .concat(this.checkpointObjects, this.finishObject, this.jumpObjects, this.outline);
+      .concat(this.checkpointObjects, this.finishObject, this.jumpObjects, this.enemyObjects, this.outline);
     this.allObjects = this.xMovingObjects
-      .concat(this.trapObjects, this.enemyObjects);
+      .concat(this.trapObjects, this.enemyMovingObjects);
   }
 
   public sorter() {
@@ -106,7 +111,7 @@ export class Maps {
         obj.y + obj.height > 0) || obj.isTouched) {
         obj.draw();
       }
-    } for (const obj of this.maps[this.level].enemyObjects) {
+    } for (const obj of this.shootingObjects) {
       if (obj.bullets[obj.bullets.length - 1]) {
         for (const bul of obj.bullets) {
           // If the bullet does not yet exist in the array, add it
@@ -124,10 +129,9 @@ export class Maps {
   }
 
   public newPosAll(dir) {
-    console.log(this.allObjects)
     for (const obj of this.allObjects) {
       obj.newPosX(dir);
-    } for (const obj of this.maps[this.level].enemyObjects) {
+    } for (const obj of this.enemyMovingObjects) {
       obj.newPosY();
     }
   }
