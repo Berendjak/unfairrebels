@@ -124,6 +124,7 @@ export class Maps {
   }
 
   public newPosAll(dir) {
+    console.log(this.allObjects)
     for (const obj of this.allObjects) {
       obj.newPosX(dir);
     } for (const obj of this.maps[this.level].enemyObjects) {
