@@ -4,6 +4,7 @@ import { BulletObject } from './bullet.object';
 const gravity = 0.01;
 
 export class EnemyObject extends XMovingObject {
+  public img = new Image();
   public gravitySpeed: number;
   public yDistance: number;
   public fireSpeed: number;
@@ -13,6 +14,7 @@ export class EnemyObject extends XMovingObject {
 
   constructor(params, fireBurst = 1000, fireSpeed = -7.5) {
     super(params);
+    this.img.src = '../../assets/images/props/fighter.png';
     this.fireSpeed = fireSpeed;
     this.gravitySpeed = -1;
     this.yDistance = 0;

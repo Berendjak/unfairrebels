@@ -1,8 +1,10 @@
 import { XMovingObject } from '../helpers/x.moving.canvas';
 
 export class CheckpointObject extends XMovingObject {
-  public hasPassed: boolean;
+  public width = 30;
+  public height = 130;
   public img = new Image();
+  public hasPassed: boolean;
 
   constructor(params){
     super(params);

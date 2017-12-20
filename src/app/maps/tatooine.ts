@@ -64,7 +64,7 @@ export class Tatooine {
 
     ],
     checkpointObjects: [
-      new CheckpointObject({ctx: this.ctx, x: 300,  y: 260}),
+      new CheckpointObject({ctx: this.ctx, x: 280,  y: 180}),
       new CheckpointObject({ctx: this.ctx, x: 960,  y: 420}),
       new CheckpointObject({ctx: this.ctx, x: 1550, y: 290}),
     ],
@@ -72,11 +72,11 @@ export class Tatooine {
       // new JumpObject({ctx: this.ctx, x: 300, y: 200, width: 50, height: 50, color: 'yellow'})
     ],
     enemyObjects: [
-       // new EnemyObject({ctx: this.ctx, x: 1500, y: 400, width: 50, height: 50, color: 'red'}),
+       new EnemyObject({ctx: this.ctx, x: 200, y: 200, width: 115, height: 100}),
       // new EnemyObject({ctx: this.ctx, x: 1500, y: 200, width: 50, height: 50, color: 'red'})
     ],
 
-    finishObject: new FinishObject({ctx: this.ctx, x: 1700, y: 450, width: 10, height: 60, color: 'white'})
+    finishObject: new FinishObject({ctx: this.ctx, x: 1700, y: 450})
   };
 }
 

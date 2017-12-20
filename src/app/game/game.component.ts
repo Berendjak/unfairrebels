@@ -11,6 +11,7 @@ import { CheckpointObject } from '../objects/checkpoint.object';
 import { Message } from '../helpers/message.canvas';
 import { FinishObject } from '../objects/finish.object';
 import { JumpObject } from '../objects/jump.object';
+import {EnemyObject} from "../objects/enemy.object";
 
 @Component({
   selector: 'app-game',
@@ -139,7 +140,6 @@ export class GameComponent implements AfterViewInit, OnInit {
   // Calculates if the character hasPassed a specific checkpoint for the restart
   public checkpoints() {
     this.currentSeconds = new Date().getTime() / 1000;
-    // this.checkpointSec = new Date();
     // Checks if character has passed a checkpoint and sets has passed to true
     for (const checkpoint of this.maps.checkpointObjects) {
       if (this.character.x + this.character.width >= checkpoint.x) {
@@ -151,6 +151,7 @@ export class GameComponent implements AfterViewInit, OnInit {
       } if (this.checkpointSec + 3 >= this.currentSeconds && checkpoint.hasPassed)
         this.message.draw();
     }
+
     // Gets the furthest checkpoint which the character has passed
     this.checkpointHasPassed = this.maps.checkpointObjects.filter(x => x.hasPassed)
       .find(a => a.x === (this.maps.checkpointObjects
@@ -174,7 +175,7 @@ export class GameComponent implements AfterViewInit, OnInit {
         this.character.y < obj.y + obj.height &&
         this.character.x + this.character.width > obj.x &&
         this.character.x < obj.width + obj.x &&
-        !(obj instanceof FinishObject) && !(obj instanceof CheckpointObject)) {
+        !(obj instanceof FinishObject) && !(obj instanceof CheckpointObject) && !(obj instanceof EnemyObject)) {
         this.curFloorObject = obj;
         break;
       }
@@ -212,7 +213,7 @@ export class GameComponent implements AfterViewInit, OnInit {
       if (obj.y + obj.height <= this.character.y &&
         this.character.x + this.character.width > obj.x &&
         this.character.x < obj.width + obj.x &&
-        !(obj instanceof FinishObject) && !(obj instanceof CheckpointObject)) {
+        !(obj instanceof FinishObject) && !(obj instanceof CheckpointObject) && !(obj instanceof EnemyObject)) {
         this.curCeilObject = obj;
         break;
       }
@@ -258,14 +259,14 @@ export class GameComponent implements AfterViewInit, OnInit {
     }
     if (this.curRightObject.x + this.curRightObject.width > this.character.x - this.maps.allObjects[this.maps.allObjects.indexOf(this.curRightObject)].speedLeftX -
       (this.maps.allObjects[this.maps.allObjects.indexOf(this.curRightObject)].velocity ? this.maps.allObjects[this.maps.allObjects.indexOf(this.curRightObject)].velocity : 0) &&
-      !(this.curRightObject instanceof CheckpointObject) && !(this.curRightObject instanceof FinishObject)) {
+      !(this.curRightObject instanceof CheckpointObject) && !(this.curRightObject instanceof FinishObject) && !(this.curRightObject instanceof EnemyObject)) {
       this.maps.newPosAll('right');
       if (this.curRightObject instanceof BulletObject && !this.gameOverCalled) {
         this.gameOver();
       }
     } else if (this.curLeftObject.x < this.character.x + this.character.width - this.maps.allObjects[this.maps.allObjects.indexOf(this.curLeftObject)].speedRightX -
       (this.maps.allObjects[this.maps.allObjects.indexOf(this.curLeftObject)].velocity ? this.maps.allObjects[this.maps.allObjects.indexOf(this.curLeftObject)].velocity : 0) &&
-      !(this.curLeftObject instanceof CheckpointObject) && !(this.curLeftObject instanceof FinishObject)) {
+      !(this.curLeftObject instanceof CheckpointObject) && !(this.curLeftObject instanceof FinishObject) && !(this.curLeftObject instanceof EnemyObject)) {
       this.maps.newPosAll('left');
       if (this.curLeftObject instanceof BulletObject && !this.gameOverCalled) {
         this.gameOver();
