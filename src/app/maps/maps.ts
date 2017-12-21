@@ -1,13 +1,16 @@
-import { PlatformObject } from '../objects/platform.object';
-import { Tatooine } from './tatooine';
-import { FinishObject } from '../objects/finish.object';
 import { Params } from '@angular/router';
-import {EnemyMovingObject} from "../objects/enemy.moving.object";
+
+import { PlatformObject } from '../objects/platform.object';
+import { FinishObject } from '../objects/finish.object';
+
+import { Naboo } from './naboo';
+import { Tatooine } from './tatooine';
 
 
 export class Maps {
   public maps = [
-    new Tatooine(this.ctx).tatooineObjects
+    new Tatooine(this.ctx).tatooineObjects,
+    new Naboo(this.ctx).nabooObjects
   ];
 
   public allObjects = [];
@@ -47,7 +50,7 @@ export class Maps {
 
   public filler() {
     this.platformObjects = this.maps[this.level].platformObjects;
-    this.trapObjects = this.maps[this.level].trapObjects;
+    this.trapObjects = this.maps[this.level].trapObjects ;
     this.checkpointObjects = this.maps[this.level].checkpointObjects;
     this.enemyMovingObjects = this.maps[this.level].enemyMovingObjects;
     this.enemyObjects = this.maps[this.level].enemyObjects;
@@ -114,7 +117,7 @@ export class Maps {
       }
     } for (const obj of this.shootingObjects) {
       if (obj.bullets[obj.bullets.length - 1]) {
-        for (const bul of obj.bullets) {
+        for (const bul of obj.bullets)
           // If the bullet does not yet exist in the array, add it
           if (!this.allObjects.includes(bul) && bul.x + bul.width > 0) {
             bul.newPosX('both');
@@ -124,18 +127,18 @@ export class Maps {
             this.allObjects.splice(this.allObjects.indexOf(bul));
           }
         }
-      }
       if (obj.intervalOn && obj.x > canvas.width || obj.x < 0) {
         obj.intervalOn = false;
         clearInterval(obj.interval);
       } else if (!obj.intervalOn && obj.x < canvas.width && obj.x > 0) {
-        clearInterval(obj.interval);
-        obj.intervalOn = true;
-        setInterval(obj.intervalData, obj.fireBurst);
+          clearInterval(obj.interval);
+          obj.intervalOn = true;
+          setInterval(obj.intervalData, obj.fireBurst);
+        }
       }
+      this.sorter();
     }
-    this.sorter();
-  }
+
 
   public newPosAll(dir) {
     for (const obj of this.allObjects) {
