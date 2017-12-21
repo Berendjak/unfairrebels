@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { SoundService } from '../services/sound.service';
 
 @Component({
   selector: 'app-restart',
@@ -9,7 +10,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 })
 export class RestartComponent implements OnInit {
   constructor( private activeRoute: ActivatedRoute,
-               private router: Router ) {}
+               private router: Router,
+               public sound: SoundService) {}
 
   public checkpoint: number;
   public level: number;
@@ -17,11 +19,7 @@ export class RestartComponent implements OnInit {
   ngOnInit() {
     this.activeRoute.params.subscribe((params: Params) => {
       this.checkpoint = params.checkpoint;
-<<<<<<< Updated upstream
-      this.level      = params.level;
-=======
       this.level = params.level;
->>>>>>> Stashed changes
     });
   }
 

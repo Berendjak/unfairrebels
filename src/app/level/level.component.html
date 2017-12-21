@@ -1,5 +1,12 @@
 <section>
-  <button type="button" routerLink="/game/0/-1">Level One</button>
-  <button type="button" routerLink="/game/1/-1">Level Two</button>
+  <button class="sound" (click)="sound.soundBack('../assets/sounds/theme.mp3')">{{sound.buttonStatus}}<div class="mask"></div></button>
+  <div class="center-wrap">
+    <button  routerLink="/game/0/-1">Level One
+
+    </button>
+    <button  routerLink="/game/1/-1">Level Two
+
+    </button>
+  </div>
 </section>
 

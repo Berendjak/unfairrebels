@@ -1,4 +1,5 @@
 <section>
+  <button class="sound" (click)="sound.soundBack('../assets/sounds/theme.mp3')">{{sound.buttonStatus}}<div class="mask"></div></button>
   <h1>Press <strong>space</strong> or</h1>
   <button  [routerLink]="['/game', this.level, this.checkpoint]">restart</button>
 </section>

@@ -25,6 +25,8 @@ export class Maps {
     new PlatformObject({ctx: this.ctx, x: -1000,    y: -200, width: 999999, height: 1}),
     new PlatformObject({ctx: this.ctx, x: -1000,    y: 800,  width: 999999, height: 1}),
     new PlatformObject({ctx: this.ctx, x: -1000,    y: -200, width: 1,      height: 1000}),
+    new PlatformObject({ctx: this.ctx, x: -1000,    y: -200, width: 1,      height: 700}),
+    new PlatformObject({ctx: this.ctx, x: -1000,    y: -200, width: 1,      height: 600}),
     new PlatformObject({ctx: this.ctx, x: 999999,   y: -200, width: 1,      height: 1000}),
   ];
   public platformObjects    = [];
