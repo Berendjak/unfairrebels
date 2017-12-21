@@ -135,12 +135,11 @@ export class Maps {
       } else if (!obj.intervalOn && obj.x < canvas.width && obj.x > 0) {
           clearInterval(obj.interval);
           obj.intervalOn = true;
-          setInterval(obj.intervalData, obj.fireBurst);
+          obj.interval = setInterval(obj.intervalData, obj.fireBurst);
         }
       }
       this.sorter();
     }
-
 
   public newPosAll(dir) {
     for (const obj of this.allObjects) {
