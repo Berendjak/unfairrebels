@@ -1,13 +1,16 @@
-import { PlatformObject } from '../objects/platform.object';
-import { Tatooine } from './tatooine';
-import { FinishObject } from '../objects/finish.object';
 import { Params } from '@angular/router';
-import {EnemyMovingObject} from "../objects/enemy.moving.object";
+
+import { PlatformObject } from '../objects/platform.object';
+import { FinishObject } from '../objects/finish.object';
+
+import { Hoth } from './hoth';
+import { Tatooine } from './tatooine';
 
 
 export class Maps {
   public maps = [
-    new Tatooine(this.ctx).tatooineObjects
+    new Tatooine(this.ctx).tatooineObjects,
+    new Hoth(this.ctx).nabooObjects
   ];
 
   public allObjects = [];
@@ -22,6 +25,8 @@ export class Maps {
     new PlatformObject({ctx: this.ctx, x: -1000,    y: -200, width: 999999, height: 1}),
     new PlatformObject({ctx: this.ctx, x: -1000,    y: 800,  width: 999999, height: 1}),
     new PlatformObject({ctx: this.ctx, x: -1000,    y: -200, width: 1,      height: 1000}),
+    new PlatformObject({ctx: this.ctx, x: -1000,    y: -200, width: 1,      height: 700}),
+    new PlatformObject({ctx: this.ctx, x: -1000,    y: -200, width: 1,      height: 600}),
     new PlatformObject({ctx: this.ctx, x: 999999,   y: -200, width: 1,      height: 1000}),
   ];
   public platformObjects    = [];
@@ -33,8 +38,6 @@ export class Maps {
   public finishObject: FinishObject;
 
   public shootingObjects    = [];
-
-  public intervalSet = true;
 
   public level = 0;
 
@@ -49,7 +52,7 @@ export class Maps {
 
   public filler() {
     this.platformObjects = this.maps[this.level].platformObjects;
-    this.trapObjects = this.maps[this.level].trapObjects;
+    this.trapObjects = this.maps[this.level].trapObjects ;
     this.checkpointObjects = this.maps[this.level].checkpointObjects;
     this.enemyMovingObjects = this.maps[this.level].enemyMovingObjects;
     this.enemyObjects = this.maps[this.level].enemyObjects;
@@ -116,7 +119,7 @@ export class Maps {
       }
     } for (const obj of this.shootingObjects) {
       if (obj.bullets[obj.bullets.length - 1]) {
-        for (const bul of obj.bullets) {
+        for (const bul of obj.bullets)
           // If the bullet does not yet exist in the array, add it
           if (!this.allObjects.includes(bul) && bul.x + bul.width > 0) {
             bul.newPosX('both');
@@ -126,18 +129,17 @@ export class Maps {
             this.allObjects.splice(this.allObjects.indexOf(bul));
           }
         }
-      }
-      if (this.intervalSet && obj.x > canvas.width || obj.x < 0) {
-        this.intervalSet = false;
+      if (obj.intervalOn && obj.x > canvas.width || obj.x < 0) {
+        obj.intervalOn = false;
         clearInterval(obj.interval);
-      } else if (!this.intervalSet && obj.x < canvas.width && obj.x > 0) {
-        clearInterval(obj.interval);
-        this.intervalSet = true;
-        setInterval(obj.intervalData, obj.fireBurst);
+      } else if (!obj.intervalOn && obj.x < canvas.width && obj.x > 0) {
+          clearInterval(obj.interval);
+          obj.intervalOn = true;
+          obj.interval = setInterval(obj.intervalData, obj.fireBurst);
+        }
       }
+      this.sorter();
     }
-    this.sorter();
-  }
 
   public newPosAll(dir) {
     for (const obj of this.allObjects) {

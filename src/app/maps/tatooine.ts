@@ -58,7 +58,7 @@ export class Tatooine {
       new PlatformObject({ctx: this.ctx, x: 2180, y: 270,  width: 140,   height: 15,   color: '#bf9287'}),
       new PlatformObject({ctx: this.ctx, x: 2280, y: 200,  width: 140,   height: 15,   color: '#bf9287'}),
 
-      new PlatformObject({ctx: this.ctx, x: 3950, y: 550, width: 200, height: 15, color: 'black'})
+      new PlatformObject({ctx: this.ctx, x: 3950, y: 550, width: 200, height: 15, color: 'black'}),
       new PlatformObject({ctx: this.ctx, x: 3950, y: 550, width: 200, height: 15, color: 'black'})
     ],
     trapObjects: [
@@ -105,11 +105,9 @@ export class Tatooine {
     ],
 
     enemyObjects: [
-      new EnemyObject({ctx: this.ctx, x: 3400, y: 300})
-
-
-    ],
-    finishObject: new FinishObject({ctx: this.ctx, x: 3300, y: 450})
+      new EnemyObject({ctx: this.ctx, x: 2500, y: 300})
+  ],
+    finishObject: new FinishObject({ctx: this.ctx, x: 3000, y: 450})
   };
 }
 
