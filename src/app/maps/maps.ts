@@ -129,14 +129,6 @@ export class Maps {
             this.allObjects.splice(this.allObjects.indexOf(bul));
           }
         }
-      if (obj.intervalOn && obj.x > canvas.width || obj.x < 0) {
-        obj.intervalOn = false;
-        clearInterval(obj.interval);
-      } else if (!obj.intervalOn && obj.x < canvas.width && obj.x > 0) {
-          clearInterval(obj.interval);
-          obj.intervalOn = true;
-          obj.interval = setInterval(obj.intervalData, obj.fireBurst);
-        }
       }
       this.sorter();
     }

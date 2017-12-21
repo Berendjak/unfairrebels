@@ -7,7 +7,6 @@ export class ShootingCanvas extends XMovingObject {
 
   public intervalData: any;
   public interval: any;
-  public intervalOn = true;
   public bullets = [];
   public bulletY: number;
 
@@ -15,6 +14,7 @@ export class ShootingCanvas extends XMovingObject {
     super(params);
     this.fireSpeed = fireSpeed;
     this.intervalData = () => this.bullet(this.bulletY);
+    this.interval = setInterval(this.intervalData, fireBurst);
   }
 
   public bullet(y) {

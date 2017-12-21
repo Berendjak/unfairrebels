@@ -103,7 +103,12 @@ export class GameComponent implements AfterViewInit, OnInit {
     this.backgroundUrl = '../../assets/images/canvas_background_' + this.activeLevel + '.jpg';
   }
 
-  public clearInterval() {}
+  public clearInterval() {
+    for (const obj of this.maps.shootingObjects) {
+      clearInterval(obj.interval);
+    }
+    clearInterval(this.interval)
+  }
 
   // Gets the positions of the allObjects
   public platformPos() {
@@ -166,8 +171,7 @@ export class GameComponent implements AfterViewInit, OnInit {
         clearInterval(obj.interval);
       }
       setTimeout(() => {
-        clearInterval(this.interval),
-          this.clearInterval();
+        clearInterval(this.interval)
         this.router.navigate(['/finish', this.activeLevel]);
       }, 200);
     }
