@@ -95,12 +95,12 @@ export class GameComponent implements AfterViewInit, OnInit {
       this.activeCheckpoint = params.checkpoint;
       this.activeLevel = params.level;
     });
-    this.backgroundUrl = '../../assets/images/canvas_background_' + this.activeLevel + '.jpg';
     this.canvas = this.canvasRef.nativeElement;
     this.canvas.width = 1000;
     this.canvas.height = 650;
     this.ctx = this.canvas.getContext('2d');
     this.startGame();
+    this.backgroundUrl = '../../assets/images/canvas_background_' + this.activeLevel + '.jpg';
   }
 
   public clearInterval() {}
@@ -142,7 +142,7 @@ export class GameComponent implements AfterViewInit, OnInit {
     this.checkpointHasPassed = checkpointsHasPassed[checkpointsHasPassed.length - 1];
     // Checks if character has passed a checkpoint and sets has passed to true
     for (const checkpoint of this.maps.checkpointObjects) {
-      if (checkpoint.x < this.char.x) {
+      if (this.activeCheckpointObject && checkpoint.x < this.activeCheckpointObject.x) {
         checkpoint.hasPassed = true;
       }
       // console.log( this.character.y < checkpoint.y + checkpoint.height)
