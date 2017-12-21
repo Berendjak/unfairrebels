@@ -1,4 +1,6 @@
 <section>
   <button class="sound" (click)="sound.soundBack('../assets/sounds/theme.mp3')">{{sound.buttonStatus}}<div class="mask"></div></button>
-  <button  [routerLink]="['/level']">Levels</button>
+  <h1 class="finishtext">you won</h1>
+  <button  [routerLink]="['/game/' + level + '/-1']">next level<div class="mask"></div></button>
+  <button  [routerLink]="['/level']">levels<div class="mask"></div></button>
 </section>

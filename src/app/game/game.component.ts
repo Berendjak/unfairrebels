@@ -168,7 +168,7 @@ export class GameComponent implements AfterViewInit, OnInit {
       setTimeout(() => {
         clearInterval(this.interval),
           this.clearInterval();
-        this.router.navigate(['/finish']);
+        this.router.navigate(['/finish', this.activeLevel]);
       }, 200);
     }
   }
