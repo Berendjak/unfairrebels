@@ -11,9 +11,6 @@ export class Tatooine {
 
   public tatooineObjects = {
     platformObjects: [
-      // new PlatformObject({ctx: this.ctx, x: -30,        y: 300,  width: 30,    height: 15,   color: '#bf9287'}),
-
-
       new PlatformObject({ctx: this.ctx, x: 0,    y: 480,  width: 80,    height: 15,   color: '#bf9287'}),
       new PlatformObject({ctx: this.ctx, x: 120,  y: 410,  width: 80,    height: 15,   color: '#bf9287'}),
         // trap 0
@@ -35,11 +32,12 @@ export class Tatooine {
         // trap 4
       new PlatformObject({ctx: this.ctx, x: 1365, y: -150, width: 15,    height: 465,  color: '#bf9287'}),
         // jump 0
-      new PlatformObject({ctx: this.ctx, x: 1150, y: 250,  width: 75,    height: 15,   color: '#bf9287'}),
+      new PlatformObject({ctx: this.ctx, x: 1150, y: 250,  width: 45,    height: 15,   color: '#bf9287'}),
       new PlatformObject({ctx: this.ctx, x: 1255, y: 300,  width: 95,    height: 15,   color: '#bf9287'}),
       new PlatformObject({ctx: this.ctx, x: 1255, y: 400,  width: 95,    height: 15,   color: '#bf9287'}),
         // trap 5/6
       new PlatformObject({ctx: this.ctx, x: 1255, y: 400,  width: 95,    height: 15,   color: '#bf9287'}),
+      new PlatformObject({ctx: this.ctx, x: 1275, y: 200,  width: 75,    height: 15,   color: '#bf9287'}),
       new PlatformObject({ctx: this.ctx, x: 1350, y: 480,  width: 200,   height: 15,   color: '#bf9287'}),
         // trap 7
       new PlatformObject({ctx: this.ctx, x: 1550, y: 480,  width: 70,    height: 15,   color: '#bf9287'}),
@@ -50,16 +48,20 @@ export class Tatooine {
       new PlatformObject({ctx: this.ctx, x: 1920, y: 480,  width: 140,   height: 15,   color: '#bf9287'}),
         // trap 10
       new PlatformObject({ctx: this.ctx, x: 1920, y: 480,  width: 140,   height: 15,   color: '#bf9287'}),
-
       new PlatformObject({ctx: this.ctx, x: 1980, y: 350,  width: 140,   height: 15,   color: '#bf9287'}),
+      new PlatformObject({ctx: this.ctx, x: 2280, y: 150,  width: 140,   height: 15,   color: '#bf9287'}),
       new PlatformObject({ctx: this.ctx, x: 2180, y: 270,  width: 140,   height: 15,   color: '#bf9287'}),
-
       new PlatformObject({ctx: this.ctx, x: 2120, y: 480,  width: 140,   height: 15,   color: '#bf9287'}),
-      new PlatformObject({ctx: this.ctx, x: 2180, y: 270,  width: 140,   height: 15,   color: '#bf9287'}),
-      new PlatformObject({ctx: this.ctx, x: 2280, y: 200,  width: 140,   height: 15,   color: '#bf9287'}),
+      new PlatformObject({ctx: this.ctx, x: 2950, y: 480,  width: 200,   height: 15,   color: '#bf9287'}),
+      new PlatformObject({ctx: this.ctx, x: 3250, y: 100,  width: 15,    height: 395,  color: '#bf9287'}),
+      new PlatformObject({ctx: this.ctx, x: 3190, y: 150,  width: 60,    height: 15,   color: '#bf9287'}),
+      new PlatformObject({ctx: this.ctx, x: 3150, y: 298,  width: 100,   height: 15,   color: '#bf9287'}),
+      new PlatformObject({ctx: this.ctx, x: 3165, y: 420,  width: 85,    height: 15,   color: '#bf9287'}),
+      new PlatformObject({ctx: this.ctx, x: 3250, y: 260,  width: 40,    height: 15,   color: '#bf9287'}),
+      new PlatformObject({ctx: this.ctx, x: 3250, y: 390,  width: 75,    height: 15,   color: '#bf9287'}),
+      new PlatformObject({ctx: this.ctx, x: 3260, y: 480,  width: 140,   height: 15,   color: '#bf9287'}),
+      new PlatformObject({ctx: this.ctx, x: 3720, y: 480,  width: 500,   height: 15,   color: '#bf9287'}),
 
-      new PlatformObject({ctx: this.ctx, x: 3950, y: 550, width: 200, height: 15, color: 'black'}),
-      new PlatformObject({ctx: this.ctx, x: 3950, y: 550, width: 200, height: 15, color: 'black'})
     ],
     trapObjects: [
      // 0
@@ -75,39 +77,47 @@ export class Tatooine {
       new TrapObject({ctx: this.ctx, x: 1840, y: 380,   width: 70,    height: 15,   color: '#bf9287'}),
       new TrapObject({ctx: this.ctx, x: 1830, y: 480,   width: 90,    height: 15,   color: '#bf9287'}),
       // 10
-      new TrapObject({ctx: this.ctx, x: 2060, y: 480,   width: 70,   height: 15,   color: '#bf9287'}),
-      new TrapObject({ctx: this.ctx, x: 2300, y: 480,   width: 70,   height: 15,   color: '#bf9287'}),
+      new TrapObject({ctx: this.ctx, x: 2060, y: 480,   width: 70,    height: 15,   color: '#bf9287'}),
+      new TrapObject({ctx: this.ctx, x: 2300, y: 480,   width: 70,    height: 15,   color: '#bf9287'}),
+      new TrapObject({ctx: this.ctx, x: 3150, y: 480,   width: 120,   height: 15,   color: '#bf9287'}),
+      new TrapObject({ctx: this.ctx, x: 3470, y: 480,   width: 250,   height: 15,   color: '#bf9287'}),
+
+      new TrapObject({ctx: this.ctx, x: 3400, y: 470,   width: 70,    height: 20,   color: '#e0b9b1'}),
     ],
     checkpointObjects: [
-      new CheckpointObject({ctx: this.ctx, x: 400,  y: 140}),
-      new CheckpointObject({ctx: this.ctx, x: 960,  y: 435}),
-      new CheckpointObject({ctx: this.ctx, x: 1980,  y: 350}),
+      new CheckpointObject({ctx: this.ctx, x: 400,   y: 155}),
+      new CheckpointObject({ctx: this.ctx, x: 960,   y: 450}),
+      new CheckpointObject({ctx: this.ctx, x: 1980,  y: 365}),
+      new CheckpointObject({ctx: this.ctx, x: 3000,  y: 365}),
     ],
     jumpObjects: [
-      new JumpObject({ctx: this.ctx, x: 1275, y: 200,  width: 75,    height: 15,   color: '#bf9287'}),
+      new JumpObject({ctx: this.ctx, x: 2500, y: 200,  width: 50,   height: 15,   color: '#e0b9b1'}),
+      new JumpObject({ctx: this.ctx, x: 2700, y: 200,  width: 50,   height: 15,   color: '#e0b9b1'}),
 
-      new JumpObject({ctx: this.ctx, x: 2500, y: 200,  width: 50,   height: 15,   color: '#bf9287'}),
-      new JumpObject({ctx: this.ctx, x: 2700, y: 200,  width: 50,   height: 15,   color: '#bf9287'}),
-      new JumpObject({ctx: this.ctx, x: 2900, y: 200,  width: 50,   height: 15,   color: '#bf9287'}),
+      new JumpObject({ctx: this.ctx, x: 2570, y: 350,  width: 50,   height: 15,   color: '#e0b9b1'}),
+      new JumpObject({ctx: this.ctx, x: 2770, y: 350,  width: 50,   height: 15,   color: '#e0b9b1'}),
 
-      new JumpObject({ctx: this.ctx, x: 2570, y: 350,  width: 50,   height: 15,   color: '#bf9287'}),
-      new JumpObject({ctx: this.ctx, x: 2770, y: 350,  width: 50,   height: 15,   color: '#bf9287'}),
-      new JumpObject({ctx: this.ctx, x: 2970, y: 350,  width: 50,   height: 15,   color: '#bf9287'}),
 
-      new JumpObject({ctx: this.ctx, x: 2500, y: 500,  width: 50,   height: 15,   color: '#bf9287'}),
-      new JumpObject({ctx: this.ctx, x: 2700, y: 500,  width: 50,   height: 15,   color: '#bf9287'}),
-      new JumpObject({ctx: this.ctx, x: 2900, y: 500,  width: 50,   height: 15,   color: '#bf9287'}),
+      new JumpObject({ctx: this.ctx, x: 2500, y: 480,  width: 50,   height: 15,   color: '#e0b9b1'}),
+      new JumpObject({ctx: this.ctx, x: 2700, y: 480,  width: 50,   height: 15,   color: '#e0b9b1'}),
+      new JumpObject({ctx: this.ctx, x: 2900, y: 480,  width: 50,   height: 15,   color: '#c99a8f'}),
+
+      new JumpObject({ctx: this.ctx, x: 3400, y: 480,  width: 70,   height: 15,   color: '#e0b9b1'}),
 
     ],
 
     enemyMovingObjects: [
-       new EnemyMovingObject({ctx: this.ctx, x: 3400, y: 200}),
+       new EnemyMovingObject({ctx: this.ctx, x: 3700, y: 200}),
     ],
 
     enemyObjects: [
-      new EnemyObject({ctx: this.ctx, x: 2500, y: 300})
-  ],
-    finishObject: new FinishObject({ctx: this.ctx, x: 3000, y: 450})
+
+      new EnemyObject({ctx: this.ctx, x: 2400, y: 380})
+    ],
+
+    finishObject: new FinishObject({ctx: this.ctx, x: 3900, y: 380}),
+
+
   };
 }
 

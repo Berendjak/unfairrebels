@@ -7,7 +7,7 @@ export class CheckpointObject extends XMovingObject {
   constructor(params){
     super(params);
     this.width = 30;
-    this.height = 130;
+    this.height = 115;
     this.img.src = '../../assets/images/props/checkpoint.png';
     this.hasPassed = false;
   }
