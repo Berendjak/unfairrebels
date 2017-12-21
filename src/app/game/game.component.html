@@ -1,4 +1,5 @@
 <section>
+  <button  class="level" [routerLink]="['/level']">Levels</button>
+  <button class="sound" (click)="sound.soundBack('../assets/sounds/theme.mp3')">{{sound.buttonStatus}}<div class="mask"></div></button>
   <canvas #myCanvas width="800" height="400"></canvas>
-  <button (click)="sound.soundBack('../assets/sounds/theme.mp3')" class="music">{{sound.buttonStatus}}</button>
 </section>

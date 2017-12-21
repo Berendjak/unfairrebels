@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {AppComponent} from '../app.component';
+import {SoundService} from "../services/sound.service";
 
 @Component({
   selector: 'app-level',
@@ -8,7 +9,8 @@ import {AppComponent} from '../app.component';
   encapsulation: ViewEncapsulation.None
 })
 export class LevelComponent implements OnInit {
-  constructor(private appComponent: AppComponent) {}
+  constructor(private sound:SoundService) {}
+
 
   // Variables
 

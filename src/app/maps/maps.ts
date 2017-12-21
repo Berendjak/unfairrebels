@@ -21,6 +21,8 @@ export class Maps {
     new PlatformObject({ctx: this.ctx, x: -1000,    y: -200, width: 999999, height: 1}),
     new PlatformObject({ctx: this.ctx, x: -1000,    y: 700,  width: 999999, height: 1}),
     new PlatformObject({ctx: this.ctx, x: -1000,    y: -200, width: 1,      height: 1000}),
+    new PlatformObject({ctx: this.ctx, x: -1000,    y: -200, width: 1,      height: 700}),
+    new PlatformObject({ctx: this.ctx, x: -1000,    y: -200, width: 1,      height: 600}),
     new PlatformObject({ctx: this.ctx, x: 999999,   y: -200, width: 1,      height: 1000}),
   ];
   public platformObjects    = [];
@@ -124,7 +126,6 @@ export class Maps {
   }
 
   public newPosAll(dir) {
-    console.log(this.allObjects)
     for (const obj of this.allObjects) {
       obj.newPosX(dir);
     } for (const obj of this.maps[this.level].enemyObjects) {

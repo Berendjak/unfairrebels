@@ -16,8 +16,8 @@ export class RestartComponent implements OnInit {
 
   ngOnInit() {
     this.activeRoute.params.subscribe((params: Params) => {
-      this.checkpoint = params.checkpoint;
-      this.level      = params.level;
+      this.checkpoint = params.checkpoint
+      this.level = params.level
     });
   }
 
