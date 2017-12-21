@@ -2,6 +2,7 @@ import { PlatformObject } from '../objects/platform.object';
 import { Tatooine } from './tatooine';
 import { FinishObject } from '../objects/finish.object';
 import { Params } from '@angular/router';
+import {EnemyMovingObject} from "../objects/enemy.moving.object";
 
 
 export class Maps {
@@ -33,6 +34,8 @@ export class Maps {
 
   public shootingObjects    = [];
 
+  public intervalSet = true;
+
   public level = 0;
 
   constructor(public ctx, private activeRoute) {
@@ -59,7 +62,6 @@ export class Maps {
     this.allObjects = this.xMovingObjects
       .concat(this.trapObjects, this.enemyMovingObjects);
   }
-
   public sorter() {
     this.yDesc = this.allObjects.slice();
     this.yAsc  = this.allObjects.slice();
@@ -102,6 +104,7 @@ export class Maps {
       }
     });
   }
+
   public drawAll(canvas) {
     // Draws all objects visible in the canvas
     for (const obj of this.allObjects) {
@@ -119,10 +122,18 @@ export class Maps {
             bul.newPosX('both');
             this.allObjects.push(bul);
             // If out of screen delete from allObjects array
-          } else if (this.allObjects.includes(bul) && (bul.velocity < 0 && bul.x + bul.width <= 0) || (bul.velocity > 0 && bul.x > canvas.width)) {
+          } else if (this.allObjects.includes(bul) && (bul.velocity < 0 && (bul.x + bul.width <= 0 || bul.x > canvas.width)) || (bul.velocity > 0 && bul.x > canvas.width)) {
             this.allObjects.splice(this.allObjects.indexOf(bul));
           }
         }
+      }
+      if (this.intervalSet && obj.x > canvas.width || obj.x < 0) {
+        this.intervalSet = false;
+        clearInterval(obj.interval);
+      } else if (!this.intervalSet && obj.x < canvas.width && obj.x > 0) {
+        clearInterval(obj.interval);
+        this.intervalSet = true;
+        setInterval(obj.intervalData, obj.fireBurst);
       }
     }
     this.sorter();

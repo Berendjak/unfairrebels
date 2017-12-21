@@ -6,6 +6,8 @@ export class BulletObject extends XMovingObject {
 
   constructor(params, speedLeftX, speedRightX, velocity) {
     super(params);
+    this.width = 40;
+    this.height = 3;
     this.speedLeftX = speedLeftX;
     this.speedRightX = speedRightX;
     this.velocity = velocity;

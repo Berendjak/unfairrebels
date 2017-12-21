@@ -5,17 +5,19 @@ export class ShootingCanvas extends XMovingObject {
   public img = new Image();
   public fireSpeed: number;
 
-  public interval;
+  public intervalData: any;
+  public interval: any;
   public bullets = [];
   public bulletY: number;
 
-  constructor(params, fireSpeed = -7.5, fireBurst = 1000) {
+  constructor(params, fireSpeed = -7.5, public fireBurst = 1000) {
     super(params);
     this.fireSpeed = fireSpeed;
-    this.interval = setInterval(() => this.bullet(this.bulletY), fireBurst);
+    this.intervalData = () => this.bullet(this.bulletY);
+    this.interval = setInterval(this.intervalData, fireBurst);
   }
 
   public bullet(y) {
-    this.bullets.push(new BulletObject({ctx: this.ctx, x:  parseInt(this.x.toString(), 10), y: y, width: 40, height: 3}, this.speedLeftX, this.speedRightX, this.fireSpeed));
+    this.bullets.push(new BulletObject({ctx: this.ctx, x:  parseInt(this.x.toString(), 10), y: y}, this.speedLeftX, this.speedRightX, this.fireSpeed));
   }
 }

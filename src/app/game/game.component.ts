@@ -12,6 +12,7 @@ import { Message } from '../helpers/message.canvas';
 import { FinishObject } from '../objects/finish.object';
 import { JumpObject } from '../objects/jump.object';
 import { EnemyMovingObject } from '../objects/enemy.moving.object';
+import {checkAndUpdateBinding} from "@angular/core/src/view/util";
 
 @Component({
   selector: 'app-game',
@@ -102,10 +103,7 @@ export class GameComponent implements AfterViewInit, OnInit {
   }
 
   public clearInterval() {
-    clearInterval(this.interval);
-    for (const key of Object.keys(this.maps.enemyMovingObjects)) {
-      clearInterval(this.maps.enemyMovingObjects[key].interval);
-    }
+
   }
 
   // Gets the positions of the allObjects
@@ -140,30 +138,37 @@ export class GameComponent implements AfterViewInit, OnInit {
   // Calculates if the character hasPassed a specific checkpoint for the restart
   public checkpoints() {
     this.currentSeconds = new Date().getTime() / 1000;
+    // Gets the furthest checkpoint which the character has passed
+    const checkpointsHasPassed = this.maps.checkpointObjects.filter(obj => obj.hasPassed);
+    this.checkpointHasPassed = checkpointsHasPassed[checkpointsHasPassed.length - 1];
     // Checks if character has passed a checkpoint and sets has passed to true
     for (const checkpoint of this.maps.checkpointObjects) {
-      if (this.character.x + this.character.width >= checkpoint.x) {
+      if (checkpoint.x < this.char.x) {
+        checkpoint.hasPassed = true;
+      }
+      // console.log( this.character.y < checkpoint.y + checkpoint.height)
+      if (this.character.x + this.character.width >= checkpoint.x && this.character.y < checkpoint.y + checkpoint.height) {
+        // console.log(checkpoint.hasPassed)
         if (!checkpoint.hasPassed) {
           this.checkpointSec = new Date().getTime() / 1000;
-          this.message = new Message({ctx: this.ctx, msg: 'Checkpoint Passed', x: this.canvas.width / 2 - 100, y: 50, color: '#08c9fb'});
+          this.message = new Message({ctx: this.ctx, msg: 'Checkpoint Passed', x: this.canvas.width / 2 - 150, y: 50, color: '#08c9fb'});
         }
         checkpoint.hasPassed = true;
-      } if (this.checkpointSec + 3 >= this.currentSeconds && checkpoint.hasPassed)
-        this.message.draw();
+      } if (this.checkpointSec + 3 >= this.currentSeconds && checkpoint.hasPassed) this.message.draw();
     }
 
-    // Gets the furthest checkpoint which the character has passed
-    this.checkpointHasPassed = this.maps.checkpointObjects.filter(x => x.hasPassed)
-      .find(a => a.x === (this.maps.checkpointObjects
-        .filter(x => x.hasPassed).length === 1 ? a.x : Math.max
-        .apply(null, Array.from(this.maps.checkpointObjects, b => b.x))) && a.hasPassed);
   }
   // Calculates the collision with thi finishObject and the character
   public colliderFinish() {
     // Checks for the side collisions
     if (this.hasCollided(this.maps.finishObject)) {
+      this.gameOverCalled = true;
+      for (const obj of this.maps.shootingObjects) {
+        clearInterval(obj.interval);
+      }
       setTimeout(() => {
-        this.clearInterval();
+        clearInterval(this.interval),
+          this.clearInterval();
         this.router.navigate(['/finish']);
       }, 200);
     }
@@ -235,12 +240,7 @@ export class GameComponent implements AfterViewInit, OnInit {
         obj.y + obj.height >= this.character.y &&
         obj.y < this.character.y + this.character.height) {
         this.curRightObject = obj;
-        if (this.character.x - this.curRightObject.x + this.curRightObject.width < 5) {
-          this.diffRight = this.character.x - this.curRightObject.x + this.curRightObject.width;
-        }
         break;
-      } else {
-        this.diffRight = 5;
       }
     }
     // Left side of the object with the right side of the this.character
@@ -249,12 +249,7 @@ export class GameComponent implements AfterViewInit, OnInit {
         obj.y + obj.height >= this.character.y &&
         obj.y < this.character.y + this.character.height) {
         this.curLeftObject = obj;
-        if (this.character.x + this.character.width - this.curLeftObject.x > -5) {
-          this.diffLeft = this.character.x + (this.character.width - this.curLeftObject.x);
-        }
         break;
-      } else {
-        this.diffLeft = -5;
       }
     }
     if (this.curRightObject.x + this.curRightObject.width > this.character.x - this.maps.allObjects[this.maps.allObjects.indexOf(this.curRightObject)].speedLeftX -
@@ -300,8 +295,11 @@ export class GameComponent implements AfterViewInit, OnInit {
       this.character.newPosY(true);
       this.character.draw();
     }, 15);
+    for (const obj of this.maps.shootingObjects) {
+      clearInterval(obj.interval);
+    }
     setTimeout(() => {
-      this.clearInterval(),
+      clearInterval(this.interval),
       clearInterval(interval);
       this.clearCanvas(),
       this.router.navigate(['/restart', this.activeLevel, this.maps.checkpointObjects.indexOf(this.checkpointHasPassed)]);

@@ -14,10 +14,10 @@ export class EnemyMovingObject extends ShootingCanvas {
     this.height = 100;
     this.gravitySpeed = -1;
     this.yDistance = 0;
-    this.bulletY = this.y + (this.height / 2);
   }
 
   public newPosY() {
+    this.bulletY = this.y + (this.height / 2);
     if (this.gravitySpeed < 0 && this.yDistance > -100 && this.yDistance > -50) {
       this.gravitySpeed -= gravity;
       this.yDistance += this.gravitySpeed;
