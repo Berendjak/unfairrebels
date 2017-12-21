@@ -2,10 +2,9 @@ import { PlatformObject } from '../objects/platform.object';
 import { TrapObject } from '../objects/trap.object';
 import { CheckpointObject } from '../objects/checkpoint.object';
 import { FinishObject } from '../objects/finish.object';
-import { EnemyObject } from '../objects/enemy.object';
 import { EnemyMovingObject } from '../objects/enemy.moving.object';
 
-export class Naboo {
+export class Hoth {
   constructor(public ctx) { }
 
   public nabooObjects = {
@@ -47,16 +46,16 @@ export class Naboo {
 
     ],
     checkpointObjects: [
-      new CheckpointObject({ctx: this.ctx, x: 1150,   y: 70,  width: 10,   height: 50,   color: 'orange'}),
+      new CheckpointObject({ctx: this.ctx, x: 1150,   y: 70}),
     ],
     enemyMovingObjects: [
-      new EnemyMovingObject({ctx: this.ctx, x: 2300, y: 200, width: 50, height: 50, color: 'yellow'}),
-      new EnemyMovingObject({ctx: this.ctx, x: 2300, y: 400, width: 50, height: 50, color: 'yellow'}),
-      new EnemyMovingObject({ctx: this.ctx, x: 2300, y: 600, width: 50, height: 50, color: 'yellow'})
+      new EnemyMovingObject({ctx: this.ctx, x: 2300, y: 200}),
+      new EnemyMovingObject({ctx: this.ctx, x: 2300, y: 400}),
+      new EnemyMovingObject({ctx: this.ctx, x: 2300, y: 600})
     ],
     enemyObjects: [
 
     ],
-    finishObject: new FinishObject({ctx: this.ctx, x: 2050, y: 100, width: 10, height: 50, color: 'white'})
+    finishObject: new FinishObject({ctx: this.ctx, x: 2050, y: 100})
   };
 }

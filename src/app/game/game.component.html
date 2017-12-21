@@ -1,4 +1,6 @@
 <section>
-  <canvas #myCanvas width="800" height="400"></canvas>
+  <canvas #myCanvas
+          width="800" height="400"
+          [ngStyle]="{'background': 'url(' + backgroundUrl + ')'}"></canvas>
   <button (click)="sound.soundBack('../assets/sounds/theme.mp3')" class="music">{{sound.buttonStatus}}</button>
 </section>

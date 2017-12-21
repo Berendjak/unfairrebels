@@ -3,14 +3,14 @@ import { Params } from '@angular/router';
 import { PlatformObject } from '../objects/platform.object';
 import { FinishObject } from '../objects/finish.object';
 
-import { Naboo } from './naboo';
+import { Hoth } from './hoth';
 import { Tatooine } from './tatooine';
 
 
 export class Maps {
   public maps = [
     new Tatooine(this.ctx).tatooineObjects,
-    new Naboo(this.ctx).nabooObjects
+    new Hoth(this.ctx).nabooObjects
   ];
 
   public allObjects = [];

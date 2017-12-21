@@ -12,7 +12,6 @@ import { Message } from '../helpers/message.canvas';
 import { FinishObject } from '../objects/finish.object';
 import { JumpObject } from '../objects/jump.object';
 import { EnemyMovingObject } from '../objects/enemy.moving.object';
-import {checkAndUpdateBinding} from "@angular/core/src/view/util";
 
 @Component({
   selector: 'app-game',
@@ -32,6 +31,7 @@ export class GameComponent implements AfterViewInit, OnInit {
   @ViewChild('myCanvas')
   public canvasRef: ElementRef;
   public canvas;
+  public backgroundUrl: string;
 
   // Map
   public maps: Maps;
@@ -95,6 +95,7 @@ export class GameComponent implements AfterViewInit, OnInit {
       this.activeCheckpoint = params.checkpoint;
       this.activeLevel = params.level;
     });
+    this.backgroundUrl = '../../assets/images/canvas_background_' + this.activeLevel + '.jpg';
     this.canvas = this.canvasRef.nativeElement;
     this.canvas.width = 1000;
     this.canvas.height = 650;
@@ -102,9 +103,7 @@ export class GameComponent implements AfterViewInit, OnInit {
     this.startGame();
   }
 
-  public clearInterval() {
-
-  }
+  public clearInterval() {}
 
   // Gets the positions of the allObjects
   public platformPos() {
