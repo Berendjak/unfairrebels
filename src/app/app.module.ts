@@ -32,7 +32,7 @@ const Routes: Routes = [
     component: RestartComponent
   },
   {
-    path: 'finish',
+    path: 'finish/:level',
     component: FinishComponent
   }
 ];

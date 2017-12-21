@@ -6,7 +6,7 @@ export class SoundService {
 
   // soundBack
   public audioBack = new Audio();
-  public buttonStatus = 'MUTE';
+  public buttonStatus = 'mute';
   public toggle = true;
 
   public audioChar = new Audio();
@@ -14,7 +14,7 @@ export class SoundService {
   // Function for toggling the sound
   public soundBack(url) {
     this.toggle = !this.toggle;
-    this.buttonStatus = this.toggle ? 'MUTE' : 'SOUND';
+    this.buttonStatus = this.toggle ? 'mute' : 'sound';
 
     if (this.toggle) {
       this.audioBack.src = url;
