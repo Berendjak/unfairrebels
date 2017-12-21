@@ -7,6 +7,7 @@ export class ShootingCanvas extends XMovingObject {
 
   public intervalData: any;
   public interval: any;
+  public intervalOn = true;
   public bullets = [];
   public bulletY: number;
 

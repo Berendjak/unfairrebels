@@ -102,7 +102,7 @@ export class Tatooine {
        new EnemyMovingObject({ctx: this.ctx, x: 2500, y: 200}),
     ],
     enemyObjects: [
-      // new EnemyObject({ctx: this.ctx, x: 2500, y: 300})
+      new EnemyObject({ctx: this.ctx, x: 2500, y: 300})
   ],
     finishObject: new FinishObject({ctx: this.ctx, x: 3000, y: 450})
 

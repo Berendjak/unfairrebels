@@ -34,8 +34,6 @@ export class Maps {
 
   public shootingObjects    = [];
 
-  public intervalSet = true;
-
   public level = 0;
 
   constructor(public ctx, private activeRoute) {
@@ -127,12 +125,12 @@ export class Maps {
           }
         }
       }
-      if (this.intervalSet && obj.x > canvas.width || obj.x < 0) {
-        this.intervalSet = false;
+      if (obj.intervalOn && obj.x > canvas.width || obj.x < 0) {
+        obj.intervalOn = false;
         clearInterval(obj.interval);
-      } else if (!this.intervalSet && obj.x < canvas.width && obj.x > 0) {
+      } else if (!obj.intervalOn && obj.x < canvas.width && obj.x > 0) {
         clearInterval(obj.interval);
-        this.intervalSet = true;
+        obj.intervalOn = true;
         setInterval(obj.intervalData, obj.fireBurst);
       }
     }
