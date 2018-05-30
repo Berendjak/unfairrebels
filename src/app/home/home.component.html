@@ -1,5 +1,14 @@
-<!--Start knop die navigeerd naar level selectie scherm-->
-<button class="start" routerLink="level">START</button>
+<script src="../helpers/character.moving.canvas.ts"></script>
+<section>
+  <button class="sound" (click)="sound.soundBack('../assets/sounds/theme.mp3')">{{sound.buttonStatus}}<div class="mask"></div></button>
+  <h1 class="unfair">
+    unfair
+  </h1>
+  <h1 class="rebels">
+    rebels
+  </h1>
+  <div class="center-wrap">
+    <button routerLink="level">START<div class="mask"></div></button>
 
-<!--Dit is de muteknop-->
-<button (click)="appComponent.Sound()" class="music">{{appComponent.buttonStatus}}</button>
+  </div>
+</section>

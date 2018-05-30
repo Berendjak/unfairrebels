@@ -1,1 +1,7 @@
-
+<section>
+  <canvas #myCanvas
+          width="800" height="400"
+          [ngStyle]="{'background': 'url(' + backgroundUrl + ')'}"></canvas>
+  <button class="level" [routerLink]="['/level']">Levels</button>
+  <button class="sound" (click)="sound.soundBack('../assets/sounds/theme.mp3')">{{sound.buttonStatus}}<div class="mask"></div></button>
+</section>

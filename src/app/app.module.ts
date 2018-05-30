@@ -7,6 +7,10 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LevelComponent } from './level/level.component';
 import { GameComponent } from './game/game.component';
+import { RestartComponent } from './restart/restart.component';
+import { Controls } from './helpers/controls.canvas';
+import { SoundService } from './services/sound.service';
+import { FinishComponent } from './finish/finish.component';
 
 
 // The Routes are going in here!
@@ -20,8 +24,16 @@ const Routes: Routes = [
     component: LevelComponent
   },
   {
-    path: 'game',
+    path: 'game/:level/:checkpoint',
     component: GameComponent
+  },
+  {
+    path: 'restart/:level/:checkpoint',
+    component: RestartComponent
+  },
+  {
+    path: 'finish',
+    component: FinishComponent
   }
 ];
 
@@ -30,7 +42,9 @@ const Routes: Routes = [
     AppComponent,
     HomeComponent,
     LevelComponent,
-    GameComponent
+    GameComponent,
+    RestartComponent,
+    FinishComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +52,7 @@ const Routes: Routes = [
       Routes,
     )
   ],
-  providers: [],
+  providers: [Controls, SoundService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

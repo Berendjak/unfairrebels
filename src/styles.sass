@@ -1,9 +1,90 @@
-// Here goes the main css that counts for everything
-app-root
+body
+  margin: 0
+  background: linear-gradient(#000 0%, #00bfe6 100%)
+  app-root
+    height: 100vh
+    canvas
+      border: solid 1px black
+
+
+section
   display: flex
   justify-content: center
   align-items: center
   flex-direction: column
-  height: 90vh
-  canvas
-    border: solid 1px black
+  height: 100%
+  width: 100%
+  //background: url('../../assets/images/background.jpg') center center no-repeat
+  background-size: cover
+
+
+body
+  background: linear-gradient(#000 0%, #00bfe6 100%)
+
+.center-wrap
+  position: absolute
+  top: calc(50% - 100px)
+
+button
+  color: red
+  margin-bottom: 10px
+  position: relative
+  display: block
+  background: none center center no-repeat
+  background-size: cover
+  border: 2px solid #00bfe6
+  text-transform: uppercase
+  letter-spacing: .3rem
+  padding: 20px 15px
+  text-align: center
+  max-width: 270px
+  min-width: 200px
+  cursor: pointer
+  overflow: hidden
+  -webkit-transition: border 1s cubic-bezier(0.19,1,.22,1),color .6s cubic-bezier(0.19,1,.22,1)
+  transition: border 1s cubic-bezier(0.19,1,.22,1), color .6s cubic-bezier(0.19,1,.22,1), background 5s cubic-bezier(0.19,1,.22,1)
+
+  &.sound
+    position: absolute
+    top: 20px
+    right: 20px
+
+
+//.button a
+//  color: #black
+//  font-family: 'Starwars'
+//  text-decoration: none
+
+button .mask
+  background: red
+
+button .mask
+  position: absolute
+  display: block
+  width: 200px
+  height: 100px
+  -webkit-transform: translate3d(-120%,-50px,0) rotate3d(0,0,1,45deg)
+  transform: translate3d(-120%,-50px,0) rotate3d(0,0,1,45deg)
+  -webkit-transition: all 1.1s cubic-bezier(0.19,1,.22,1)
+  transition: all 1.1s cubic-bezier(0.19,1,.22,1)
+
+button .shift
+  -webkit-transition: all 1.1s cubic-bezier(0.19,1,.22,1)
+  transition: all 1.1s cubic-bezier(0.19,1,.22,1)
+
+button:hover
+  border-color: red
+/* box-shadow: 0 0 5px rgba(255,245,245,0.8); */
+/* background-image: url('http://cuinine.com/img/codepen/savvy.jpg'); */
+
+//.button:hover a
+//  color: #000000
+
+button:hover .mask
+  background: #00bfe6
+  -webkit-transform: translate3d(120%,-100px,0) rotate3d(0,0,1,90deg)
+  transform: translate3d(120%,-100px,0) rotate3d(0,0,1,90deg)
+
+
+button:hover .shift
+  padding-left: 5px
